@@ -12,23 +12,17 @@ export const Navbar = () => {
  };
  return (
   <nav>
-   <div className='nav-wrapper blue darken-1'>
-    <span href='/' className='brand-logo'>
-     Post creation
+   <div className='nav-wrapper'>
+    <span href='/' className='brand'>
+     <h1>Navigation Bar</h1>
     </span>
-    <ul id='nav-mobile' className='right hide-on-med-and-down'>
-     <li>
-      <NavLink to='/mpage'>Main Page</NavLink>
-     </li>
-     <li>
-      <NavLink to='/create'>Create Post</NavLink>
-     </li>
-     <li>
-      <a href='/' onClick={handleSignOut}>
-       Log out
-      </a>
-     </li>
-    </ul>
+    <div className='navLinks'>
+     <NavLink to='/mpage'>Main Page</NavLink>
+     <NavLink to='/create'>Create Post</NavLink>
+     <a href='/' onClick={handleSignOut}>
+      Log out
+     </a>
+    </div>
    </div>
   </nav>
  );

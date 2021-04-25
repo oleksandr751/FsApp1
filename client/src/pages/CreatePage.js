@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useHttp } from '../hooks/http.hook';
 import { AuthContext } from '../context/AuthContext';
 import { useHistory } from 'react-router-dom';
+import Activities from '../components/Activities';
 
 export const CreatePage = () => {
  const history = useHistory();
@@ -29,23 +30,7 @@ export const CreatePage = () => {
   }
  };
 
- return (
-  <div className='row'>
-   <div className='col s8 offset-s2' style={{ paddingTop: '2rem' }}>
-    <div className='input-field'>
-     <input
-      placeholder='Enter link'
-      id='link'
-      type='text'
-      value={link}
-      onChange={(e) => setLink(e.target.value)}
-      onKeyPress={pressHandler}
-     />
-     <label htmlFor='link'>Enter you link</label>
-    </div>
-   </div>
-  </div>
- );
+ return <div className='row'></div>;
 };
 
 export default CreatePage;
