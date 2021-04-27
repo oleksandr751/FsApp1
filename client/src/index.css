@@ -1,7 +1,4 @@
 body {
- background-color: black;
- width: 100%;
- height: 100%;
  text-align: center;
  align-items: center;
  margin: 0;
@@ -11,7 +8,6 @@ body {
  -moz-osx-font-smoothing: grayscale;
  color: white;
 }
-body,
 html {
  background: -webkit-radial-gradient(
    rgba(16, 47, 70, 0) 60%,
@@ -44,19 +40,42 @@ html {
   linear-gradient(108deg, rgb(183, 28, 28) 0, rgb(26, 35, 126) 90%),
   rgba(0, 0, 0, 0);
  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#c5deea', endColorstr='#066dab', GradientType=1);
+ background-color: transparent;
+ align-items: center;
+}
+body div {
+ background-color: transparent;
+ background: transparent;
+ align-self: center;
+ align-items: center;
+}
+#root button {
+ cursor: pointer;
+}
+:root {
 }
 #root {
- background: transparent;
- background-color: transparent;
 }
 div.container {
  background: transparent;
  background-color: transparent;
 }
-
-#authForm1 {
+div.navWrapper {
  background-color: transparent;
  background: transparent;
+}
+div.navLinks {
+ background-color: transparent;
+ background: transparent;
+}
+
+#authForm1 {
+ align-self: center;
+ background-color: transparent;
+ background: transparent;
+ display: flex;
+ flex-direction: row;
+ align-items: center;
  padding: 200px;
 }
 #authForm1 h1 {
@@ -71,6 +90,11 @@ div.container {
  background-color: transparent;
  background: transparent;
 }
+#AuthImage {
+}
+#imageDiv img {
+ transform: rotate(45);
+}
 #authForm2 * {
  margin: 10px;
 }
@@ -81,6 +105,15 @@ div.container {
 #authForm2 button {
  height: 50px;
  width: 100px;
+}
+#calculatorForm {
+ background-color: transparent;
+ background: transparent;
+}
+
+form.calculatorForm {
+ background-color: transparent;
+ background: transparent;
 }
 code {
  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
@@ -95,10 +128,10 @@ input[type='text']:focus {
 }
 button {
  color: white;
- background-color: #1684eb;
+ background-color: #2d0016;
  border: none;
  text-align: center;
- transition: all 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+ transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 button:hover {
  background-color: #fa6807;

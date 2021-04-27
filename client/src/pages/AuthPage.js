@@ -44,35 +44,49 @@ export const AuthPage = () => {
 
  return (
   <div className='authForm1' id='authForm1'>
-   <h1>Auth page</h1>
-   <div>
-    <form>
-     <div id='authForm2'>
-      <label htmlFor='email'>Email</label>
-      <input
-       onChange={handleChange}
-       name='email'
-       id='email'
-       autoComplete='off'
-       type='text'
-       placeholder='Enter email'
-      />
-      <label htmlFor='password'>Password</label>
-      <input
-       onChange={handleChange}
-       name='password'
-       id='password'
-       type='password'
-       placeholder='Enter password'
-      ></input>
-      <button type='submit' onClick={handleSignIn} disabled={loading}>
-       Sign in
-      </button>
-      <button type='submit' onClick={handleSignUp} disabled={loading}>
-       Sign up
-      </button>
-     </div>
-    </form>
+   <div id='authLayout'>
+    <h1>Auth page</h1>
+    <div>
+     <form>
+      <div id='authForm2'>
+       <label htmlFor='email'>Email</label>
+       <input
+        onChange={handleChange}
+        name='email'
+        id='email'
+        autoComplete='off'
+        type='text'
+        placeholder='Enter email'
+       />
+       <label htmlFor='password'>Password</label>
+       <input
+        onChange={handleChange}
+        name='password'
+        id='password'
+        type='password'
+        placeholder='Enter password'
+       ></input>
+       <button type='submit' onClick={handleSignIn} disabled={loading}>
+        Sign in
+       </button>
+       <button type='submit' onClick={handleSignUp} disabled={loading}>
+        Sign up
+       </button>
+      </div>
+     </form>
+    </div>
+   </div>
+   <div id='imageDiv'>
+    <img
+     className='SwiperImage'
+     id='AuthImage'
+     src={
+      'https://media1.tenor.com/images/92103966acc3e0133f466a3171d9b4b5/tenor.gif?itemid=19665244'
+     }
+     alt='Image2'
+     width='300'
+     height='300'
+    />
    </div>
   </div>
  );

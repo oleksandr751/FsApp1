@@ -8,6 +8,7 @@ import { AuthContext } from './context/AuthContext';
 import { Navbar } from './components/NavBar';
 import Activities from './components/Activities';
 import TodoList1 from './components/TodoList1';
+import RPS from './components/RPS';
 
 function App() {
  const { token, userId, login, logout } = useAuth();
@@ -30,6 +31,7 @@ function App() {
       <Navbar />
       <TodoList1 />
       <Activities />
+      <RPS />
      </div>
     )}
     <div className='container'>{routes}</div>
