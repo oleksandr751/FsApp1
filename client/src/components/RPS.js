@@ -9,6 +9,9 @@ const RPS = () => {
   win: null,
   score: 0,
  });
+ const [button, setButton] = useState({
+  clicked: false,
+ });
  const [ai, setAi] = useState({
   choise: Math.floor(Math.random() * arr.length),
   score: 0,
@@ -28,7 +31,20 @@ const RPS = () => {
  const handleClick = () => {
   setUser({
    ...user,
+   win: null,
+   draw: null,
+  });
+  setAi({
+   ...ai,
    choise: '',
+  });
+  setButton((prevState) => {
+   return { clicked: false };
+  });
+  setUser({
+   ...user,
+   choise: '',
+   clicked: false,
   });
   setFinalRand({
    final: '',
@@ -51,6 +67,9 @@ const RPS = () => {
   console.log('Ai choise: ' + ai.choise);
   console.log('Draw: ' + user.draw);
   console.log('Win: ' + user.win);
+  setButton((prevState) => {
+   return { clicked: true };
+  });
   if (user.win) {
    setUser({
     ...user,
@@ -169,19 +188,42 @@ const RPS = () => {
    </div>
    <div className='confirmChoise'>
     <h1>
-     Score:{user.score}:{ai.score}
+     Score: {user.score}:{ai.score}
     </h1>
-    <button onClick={checkWinner1} type='button'>
-     Confirm
-    </button>
+    {!button.clicked ? (
+     <button onClick={checkWinner1} type='button'>
+      Confirm
+     </button>
+    ) : (
+     console.log()
+    )}
+
     <button onClick={handleClick} type='button'>
-     Reset
+     Try again
     </button>
+    {!button.clicked ? (
+     <button
+      onClick={() => {
+       setAi({
+        ...ai,
+        score: 0,
+       });
+       setUser({
+        ...user,
+        score: 0,
+       });
+      }}
+     >
+      Reset Score
+     </button>
+    ) : (
+     console.log()
+    )}
    </div>
    <div>
     {/* AIChoISE */}
+    <h1>AI choise</h1>
     <div>
-     <h1>AI choise</h1>
      {finalRand.final === '' || finalRand.final === 'scissors' ? (
       <img
        className='RPSImage'
@@ -217,7 +259,6 @@ const RPS = () => {
       console.log()
      )}
     </div>
-    <div className='confirmChoise'></div>
    </div>
   </div>
  );

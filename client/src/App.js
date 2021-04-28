@@ -9,6 +9,7 @@ import { Navbar } from './components/NavBar';
 import Activities from './components/Activities';
 import TodoList1 from './components/TodoList1';
 import RPS from './components/RPS';
+import ImageGallery from './components/ImageGallery';
 
 function App() {
  const { token, userId, login, logout } = useAuth();
@@ -28,10 +29,16 @@ function App() {
    <BrowserRouter>
     {isAuthenticated && (
      <div>
-      <Navbar />
-      <TodoList1 />
-      <Activities />
-      <RPS />
+      <div id='superContainer'>
+       <Navbar />
+       <TodoList1 />
+       <Activities />
+       <RPS />
+      </div>
+
+      <div>
+       <ImageGallery />
+      </div>
      </div>
     )}
     <div className='container'>{routes}</div>

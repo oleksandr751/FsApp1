@@ -8,7 +8,12 @@ body {
  -moz-osx-font-smoothing: grayscale;
  color: white;
 }
+* {
+ background-color: transparent;
+ background: transparent;
+}
 html {
+ width: 100%;
  background: -webkit-radial-gradient(
    rgba(16, 47, 70, 0) 60%,
    rgba(16, 47, 70, 0.258824) 100%
@@ -55,6 +60,13 @@ body div {
 :root {
 }
 #root {
+}
+#superContainer {
+ display: flex;
+ flex-direction: column;
+ background-color: transparent;
+ background: transparent;
+ align-items: center;
 }
 div.container {
  background: transparent;
