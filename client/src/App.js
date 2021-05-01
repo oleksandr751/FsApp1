@@ -10,6 +10,9 @@ import Activities from './components/Activities';
 import TodoList1 from './components/TodoList1';
 import RPS from './components/RPS';
 import ImageGallery from './components/ImageGallery';
+import Counter from './components/Counter';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
 function App() {
  const { token, userId, login, logout } = useAuth();
@@ -34,6 +37,7 @@ function App() {
        <TodoList1 />
        <Activities />
        <RPS />
+       <Counter />
       </div>
 
       <div>
