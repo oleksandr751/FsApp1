@@ -89,4 +89,13 @@ router.post(
  }
 );
 
+router.get('/getUsers', async (req, res) => {
+ try {
+  const users = await User.find({});
+  res.json(users);
+ } catch (e) {
+  res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова' });
+ }
+});
+
 module.exports = router;

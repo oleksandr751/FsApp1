@@ -144,7 +144,16 @@ const RPS = () => {
  }, [user.choise, user.win, user.draw]);
 
  const callBack = () => {};
-
+ useEffect(() => {
+  async function fetchData() {
+   // You can await here
+   await fetch('/api/games/getGames')
+    .then((response) => response.json())
+    .then((data) => console.log(data));
+   // ...
+  }
+  fetchData();
+ }, []);
  return (
   <div className='RPC'>
    <div>

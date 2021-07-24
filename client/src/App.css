@@ -1,84 +1,51 @@
-.App {
- text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+* {
+ box-sizing: border-box;
+ margin: 0;
+ padding: 0;
+ font-family: 'Lato', sans-serif;
 }
 
-.App-header {
- background-color: #282c34;
- min-height: 100vh;
+body {
+ font-family: 'Exo', sans-serif;
+}
+html {
+ height: 100%;
+}
+
+.home,
+.reports,
+.products {
  display: flex;
- flex-direction: column;
+ height: 90vh;
  align-items: center;
  justify-content: center;
- font-size: calc(10px + 2vmin);
- color: white;
+ font-size: 3rem;
 }
 
-.App-link {
- color: #61dafb;
+div.postsContainer {
+ padding: 20px;
 }
-
-@keyframes App-logo-spin {
- from {
-  transform: rotate(0deg);
- }
- to {
-  transform: rotate(360deg);
- }
+#authLayout{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
 }
-
-.container {
- color: white;
- background-color: white;
+#authForm{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-
-.complete {
- text-decoration: line-through;
- opacity: 0.4;
-}
-
-img.SwiperImage {
- padding: 70px;
- background-color: transparent;
- transition: transform 2s;
- width: 300px;
- height: 300px;
- margin: 0 auto;
- filter: brightness(100%);
-}
-
-img.SwiperImage:hover {
- filter: brightness(105%);
- transform: scale(1.2);
-}
-img.RPSImage:hover {
- cursor: pointer;
- filter: brightness(105%);
- transform: scale(1.2);
-}
-div.confirmChoise {
- padding: 40px;
-}
-div.confirmChoise button {
- margin: 10px;
- width: 100px;
- height: 50px;
-}
-div.swiper1 {
- margin-top: 50px;
-}
-div.navLinks a {
- color: white;
- margin: 10px;
-}
-div.RPC {
- align-items: center;
- align-content: center;
- align-self: center;
- display: flex;
- flex-direction: row;
-}
-div.RPC div {
- align-items: center;
- align-content: center;
- align-self: center;
+#button1{
+    margin-top: 20px;
 }

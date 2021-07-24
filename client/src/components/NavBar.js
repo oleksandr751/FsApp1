@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
-export const Navbar = () => {
+export const NavBar = () => {
  const auth = useContext(AuthContext);
  const history = useHistory();
  const handleSignOut = (event) => {

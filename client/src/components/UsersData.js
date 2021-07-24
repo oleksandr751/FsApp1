@@ -1,0 +1,32 @@
+export const UsersData = [
+ {
+  id: 1,
+  username: 'Oleksandr',
+  email: 'oleks@gmail.com',
+  password: '12345',
+  avatar: '',
+  friends: [],
+  games: [],
+  comments: [],
+ },
+ {
+  id: 2,
+  username: 'Andriy',
+  email: 'andr@gmail.com',
+  password: 'qwerty',
+  avatar: '',
+  friends: [],
+  games: [],
+  comments: [],
+ },
+ {
+  id: 3,
+  username: 'Dimon228',
+  email: 'dimon228@gmail.com',
+  password: '12345',
+  avatar: '',
+  friends: [],
+  games: [],
+  comments: [],
+ },
+];

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Button, makeStyles, TextField } from '@material-ui/core';
 import { AuthContext } from '../context/AuthContext';
 import { useHttp } from '../hooks/http.hook';
 import { useMessage } from '../hooks/message.hook';
@@ -11,6 +12,15 @@ export const AuthPage = () => {
   email: '',
   password: '',
  });
+ const useStyles = makeStyles((theme) => ({
+  root: {
+   '& .MuiTextField-root': {
+    margin: theme.spacing(1),
+    width: 200,
+   },
+  },
+ }));
+ const classes = useStyles();
 
  useEffect(() => {
   message(error);
@@ -45,48 +55,50 @@ export const AuthPage = () => {
  return (
   <div className='authForm1' id='authForm1'>
    <div id='authLayout'>
-    <h1>Auth page</h1>
-    <div>
-     <form>
-      <div id='authForm2'>
-       <label htmlFor='email'>Email</label>
-       <input
-        onChange={handleChange}
+    <div id='authLayout'>
+     <h1>Auth page</h1>
+     <div>
+      <form id='authForm' className={classes.root}>
+       <TextField
+        className='inputs'
+        id='outlined-basic'
+        label='Login'
+        variant='outlined'
         name='email'
-        id='email'
         autoComplete='off'
-        type='text'
-        placeholder='Enter email'
-       />
-       <label htmlFor='password'>Password</label>
-       <input
         onChange={handleChange}
-        name='password'
-        id='password'
+        value={form.email}
+       ></TextField>
+       <TextField
         type='password'
-        placeholder='Enter password'
-       ></input>
-       <button type='submit' onClick={handleSignIn} disabled={loading}>
+        className='inputs123'
+        id='outlined-basic1'
+        name='password'
+        label='Password'
+        variant='outlined'
+        onChange={handleChange}
+        value={form.password}
+       ></TextField>
+       <Button
+        id='button1'
+        variant='contained'
+        color='primary'
+        onClick={handleSignIn}
+       >
         Sign in
-       </button>
-       <button type='submit' onClick={handleSignUp} disabled={loading}>
+       </Button>
+       <Button
+        id='button1'
+        variant='contained'
+        color='primary'
+        onClick={handleSignUp}
+       >
         Sign up
-       </button>
-      </div>
-     </form>
+       </Button>
+      </form>
+     </div>
     </div>
-   </div>
-   <div id='imageDiv'>
-    <img
-     className='SwiperImage'
-     id='AuthImage'
-     src={
-      'https://media1.tenor.com/images/92103966acc3e0133f466a3171d9b4b5/tenor.gif?itemid=19665244'
-     }
-     alt='Image2'
-     width='300'
-     height='300'
-    />
+    <h1>Auth page</h1>
    </div>
   </div>
  );
