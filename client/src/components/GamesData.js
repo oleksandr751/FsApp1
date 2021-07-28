@@ -119,7 +119,7 @@ export const GamesData = [
   awards:
    'https://cdn.akamai.steamstatic.com/steam/apps/814380/extras/Sekiro-PC_Game-Banner_GOTY_Accolade-275x1172.jpg?t=1603904569',
   categories: ['Action', 'Full Controller Support', 'Singleplayer'],
-  trailer: 'https://www.youtube.com/embed/Rx8pbCN1OcU?autoplay=1&loop=1',
+  trailer: 'https://www.youtube.com/embed/Onik-BD92Ow?autoplay=1&loop=1',
   comments: [
    {
     id: 1,
@@ -190,6 +190,33 @@ export const GamesData = [
  {
   id: Math.floor(Math.random() * 10000),
   title: 'Mount&Blade II Bannerlord',
+  description:
+   'The horns sound, the ravens gather. An empire is torn by civil war. Beyond its borders, new kingdoms rise. Gird on your sword, don your armour, summon your followers and ride forth to win glory on the battlefields of Calradia. Establish your hegemony and create a new world out of the ashes of the old.',
+  poster:
+   'https://s3.gaming-cdn.com/images/products/761/orig/mount-blade-ii-bannerlord-early-access-cover.jpg',
+  rating: 8,
+  score: 90,
+  awards:
+   'https://cdn.cloudflare.steamstatic.com/steam/apps/72850/extras/bestof_winner_indicia.png?t=1590590362',
+  categories: ['Action', 'Full Controller Support', 'Singleplayer'],
+  trailer: 'https://www.youtube.com/embed/yCk6Jk7DvrA?autoplay=1&loop=1',
+  comments: [
+   {
+    id: 1,
+    text: 'Hereby I want to warmely greet our newcomers to this website',
+   },
+   {
+    id: 2,
+    text: 'Hereby I want to warmely greet our newcomers to this website',
+   },
+  ],
+  showComments: false,
+  showVideo: false,
+  arrowDown: true,
+ },
+ {
+  id: Math.floor(Math.random() * 10000),
+  title: 'Civilization VI',
   description:
    'The horns sound, the ravens gather. An empire is torn by civil war. Beyond its borders, new kingdoms rise. Gird on your sword, don your armour, summon your followers and ride forth to win glory on the battlefields of Calradia. Establish your hegemony and create a new world out of the ashes of the old.',
   poster:

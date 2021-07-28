@@ -2,6 +2,7 @@ import { Button, makeStyles, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import MainProfile from '../components/MainProfile';
 
 import Navbar from '../components/Navbar11';
 import Posts from '../components/Posts';
@@ -18,8 +19,9 @@ import UserPage from './UserPage';
 import Users from './Users';
 
 const Auth = () => {
- const { token, userId, login, logout } = useAuth();
+ const { token, userId, userName, login, logout } = useAuth();
  const isAuthenticated = !!token;
+ const username = userName;
  const routes = useRoutes(isAuthenticated);
  const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,6 +58,7 @@ const Auth = () => {
      logout,
      isAuthenticated,
      userId,
+     userName,
     }}
    >
     <div>
@@ -63,6 +66,7 @@ const Auth = () => {
       <div>
        <Router>
         <Navbar />
+        <p>{userName}</p>
         <Switch>
          <Route path='/' exact component={Home} />
          <Route path='/reports' component={Reports} />
@@ -71,6 +75,7 @@ const Auth = () => {
          <Route path='/users' component={UserPage} />
          <Route path='/posts' component={Posts} />
          <Route path='/user' component={Profile}></Route>
+         <Route path='/profile' component={MainProfile}></Route>
         </Switch>
        </Router>
       </div>

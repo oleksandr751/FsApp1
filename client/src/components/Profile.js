@@ -16,6 +16,7 @@ const Profile = (props) => {
  return (
   <div>
    <h1>{userData.user.username}</h1>
+   <p></p>
   </div>
  );
 };

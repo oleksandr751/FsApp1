@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext } from 'react';
 
 function nope() {}
 
@@ -8,4 +8,5 @@ export const AuthContext = createContext({
  login: nope,
  logout: nope,
  isAuthenticated: false,
+ userName: '',
 });

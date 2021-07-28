@@ -1,26 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
+import * as BiIcons from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
 import './Navbar.css';
 import { IconContext } from 'react-icons';
 import { useContext } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink, useHistory, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { useHttp } from '../hooks/http.hook';
 
 function Navbar() {
  const auth = useContext(AuthContext);
+ const userName1 = auth.userName;
  const history = useHistory();
+ const location = useLocation();
+ const { request } = useHttp();
  const handleSignOut = (event) => {
   event.preventDefault();
   auth.logout();
   history.push('/');
  };
  const [sidebar, setSidebar] = useState(false);
-
+ const [mainUserData, setMainUserData] = useState({});
  const showSidebar = () => setSidebar(!sidebar);
  const asg_Kidegre = true;
+ useEffect(() => {
+  const fetchData = async () => {
+   try {
+    const response = await request('/api/auth/getMainUser', 'POST', {
+     userName1,
+    });
+    setMainUserData(response);
+   } catch (error) {
+    console.log(error.message);
+   }
+  };
+
+  fetchData();
+ }, []);
  return (
   <>
    <IconContext.Provider value={{ color: '#fff' }}>
@@ -36,11 +55,23 @@ function Navbar() {
         <AiIcons.AiOutlineClose />
        </Link>
       </li>
+      <li
+       className='nav-text'
+       onClick={() => {
+        console.log(mainUserData);
+        history.push({ pathname: 'profile', state: mainUserData });
+       }}
+      >
+       <Link to='#'>
+        <BiIcons.BiUser />
+        <span>{auth.userName}</span>
+       </Link>
+      </li>
       {SidebarData.map(
        (item, index) =>
         item.title === 'LogOut' ? (
          <li key={index} className={item.cName} onClick={handleSignOut}>
-          <Link to={item.path}>
+          <Link onClick={() => {}}>
            {item.icon}
            <span>{item.title}</span>
           </Link>

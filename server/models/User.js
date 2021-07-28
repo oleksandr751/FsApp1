@@ -3,8 +3,8 @@ const { Schema, model, Types } = require('mongoose');
 const schema = new Schema({
  id: { type: Number },
  username: { type: String },
- email: { type: String, required: true, unique: true },
- password: { type: String, required: true },
+ email: { type: String },
+ password: { type: String },
  avatar: { type: String },
  friends: [{ type: Object }],
  games: [{ type: Object }],

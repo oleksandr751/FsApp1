@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { GamesData } from '../components/GamesData';
 import StarRatingComponent from 'react-star-rating-component';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,6 +6,8 @@ import {
  AiOutlineComment,
  AiOutlineArrowDown,
  AiOutlineArrowUp,
+ AiOutlineInfoCircle,
+ AiOutlinePlusCircle,
 } from 'react-icons/ai';
 import IconButton from '@material-ui/core/IconButton';
 import { Button, TextField } from '@material-ui/core';
@@ -13,14 +15,20 @@ import { Button, TextField } from '@material-ui/core';
 // import { element } from 'prop-types';
 import './Game.css';
 import SearchBar from 'material-ui-search-bar';
+import { useHttp } from '../hooks/http.hook';
+import Tooltip from '@material-ui/core/Tooltip';
+import { useAlert } from 'react-alert';
+import { AuthContext } from '../context/AuthContext';
 // import axios from 'axios';
 // import Axios from 'axios';
 
 const Games = () => {
+ const auth = useContext(AuthContext);
  const useStyles = makeStyles((theme) => ({
   root: {
-   '& > *': {
+   '& .MuiTextField-root': {
     margin: theme.spacing(1),
+    width: 300,
    },
   },
   input: {
@@ -28,6 +36,45 @@ const Games = () => {
   },
  }));
  const classes = useStyles();
+ const alert = useAlert();
+ const { request } = useHttp();
+ const tootlips = {
+  title: 'e.g. The Witcher 3 Wild Hunt',
+  description:
+   'e.g. Become Ruler of the World by establishing and leading a civilization from the Stone Age to the Information Age.',
+  poster:
+   'Image adress e.g. https://s1.gaming-cdn.com/images/products/1437/orig/civilization-vi-cover.jpg ',
+  trailer:
+   'Embed URL e.g. https://www.youtube.com/embed/5KdE0p2joJw?autoplay=1&loop=1',
+ };
+ const initialState = {
+  id: Math.floor(Math.random() * 10000),
+  title: '',
+  description: '',
+  poster: '',
+  rating: 8,
+  score: 90,
+  awards: '',
+  categories: ['Action', 'Full Controller Support', 'Singleplayer'],
+  trailer: '',
+  comments: [
+   {
+    id: 1,
+    text: 'Hereby I want to warmely greet our newcomers to this website',
+    user: 'admin',
+   },
+   {
+    id: 2,
+    text: 'Hereby I want to warmely greet our newcomers to this website',
+    user: 'admin',
+   },
+  ],
+  showComments: false,
+  showVideo: false,
+  arrowDown: true,
+ };
+ const [addGameInputs, setAddGameInputs] = useState(initialState);
+ const [toggleAddGame, setToggleAddGame] = useState(false);
 
  const [values, setValues] = useState({
   searchBar: '',
@@ -42,9 +89,32 @@ const Games = () => {
  //   })),
  // );
  const [gameData1, setgameData1] = useState([]);
- const [gameData, setGameData] = useState(
-  GamesData.map((game3) => ({ ...game3, id: game3.id }))
- );
+ const [some, setSome] = useState({
+  id: 1,
+  id2: 2,
+ });
+
+ const addGameRequest = async () => {
+  try {
+   const response = await request('/api/games/add', 'POST', { addGameInputs });
+
+   console.log(response);
+   setAddGameInputs(initialState);
+  } catch (e) {
+   alert.show(e.message);
+  }
+ };
+
+ const addCommentRequest = async (game) => {
+  try {
+   console.log(game);
+   const response = await request('/api/games/addComments', 'POST', { game });
+   console.log(response);
+   console.log(newComments);
+  } catch (e) {
+   console.log(e.message);
+  }
+ };
 
  // Axios.get('https://api.coindesk.com/v1/bpi/currentprice.json').then(
  //   response => {
@@ -75,6 +145,9 @@ const Games = () => {
   //   )
   // );
  };
+ const handleChangeAddGameInputs = (e) => {
+  setAddGameInputs({ ...addGameInputs, [e.target.name]: e.target.value });
+ };
  useEffect(() => {
   const fetchData = async () => {
    // You can await here
@@ -88,14 +161,107 @@ const Games = () => {
   };
   fetchData();
  }, []);
-
+ useEffect(() => {
+  console.log(gameData1);
+ }, [gameData1]);
  //  console.log(gamed.comments.length);
  return (
   <div className='gamesPage'>
    <h1 id='mainHeader'>Games</h1>
+   <Tooltip title='Add new Game' placement='right'>
+    <IconButton
+     aria-label='delete'
+     className={classes.margin}
+     onClick={() => {
+      setToggleAddGame(!toggleAddGame);
+     }}
+    >
+     <AiOutlinePlusCircle></AiOutlinePlusCircle>
+    </IconButton>
+   </Tooltip>
+   {toggleAddGame ? (
+    <div>
+     <form id='addGameForm' className={classes.root}>
+      <div>
+       <TextField
+        id='outlined-basic'
+        label='Game Title'
+        variant='outlined'
+        name='title'
+        value={addGameInputs.title}
+        onChange={handleChangeAddGameInputs}
+       ></TextField>
+       <Tooltip title={tootlips.title} placement='right'>
+        <a>
+         <AiOutlineInfoCircle />
+        </a>
+       </Tooltip>
+      </div>
+      <div>
+       {' '}
+       <TextField
+        id='outlined-basic'
+        label='Game Description'
+        variant='outlined'
+        name='description'
+        multiline
+        value={addGameInputs.description}
+        onChange={handleChangeAddGameInputs}
+       ></TextField>
+       <Tooltip title={tootlips.description} placement='right'>
+        <a>
+         <AiOutlineInfoCircle />
+        </a>
+       </Tooltip>
+      </div>
+      <div>
+       <TextField
+        id='outlined-basic'
+        label='Game Poster'
+        variant='outlined'
+        name='poster'
+        multiline
+        value={addGameInputs.poster}
+        onChange={handleChangeAddGameInputs}
+       ></TextField>
+       <Tooltip title={tootlips.poster} placement='right'>
+        <a>
+         <AiOutlineInfoCircle />
+        </a>
+       </Tooltip>
+      </div>
+      <div>
+       <TextField
+        id='outlined-basic'
+        label='Game Trailer'
+        variant='outlined'
+        name='trailer'
+        multiline
+        value={addGameInputs.trailer}
+        onChange={handleChangeAddGameInputs}
+       ></TextField>
+       <Tooltip title={tootlips.trailer} placement='right'>
+        <a>
+         <AiOutlineInfoCircle />
+        </a>
+       </Tooltip>
+      </div>
+
+      <Button
+       id='createPostButton'
+       variant='contained'
+       color='primary'
+       onClick={addGameRequest}
+      >
+       Add Game
+      </Button>
+     </form>
+    </div>
+   ) : null}
    <SearchBar
     className='searchBar'
     name='searchBar'
+    autoComplete='off'
     value={values.searchBar}
     onChange={(newValue) => {
      setValues({ ...values, searchBar: newValue });
@@ -107,7 +273,7 @@ const Games = () => {
    {gameData1
     .filter((value) => {
      if (value.title) {
-      if (values.searchBar == '') {
+      if (values.searchBar === '') {
        return value;
       } else if (
        value.title.toLowerCase().includes(values.searchBar.toLowerCase())
@@ -124,7 +290,7 @@ const Games = () => {
      }
      return 0;
     })
-    .map((game) =>
+    .map((game, index) =>
      game.title ? (
       <div key={game.id} className='eachGame'>
        <div className='eachGameImage'>
@@ -182,24 +348,27 @@ const Games = () => {
          //  onStarHover={}
          starCount={10}
         ></StarRatingComponent>
-        <IconButton
-         aria-label='delete'
-         className={classes.margin}
-         onClick={() => {
-          setgameData1([
-           ...gameData1,
-           (game.showComments = !game.showComments),
-          ]);
-         }}
-        >
-         <AiOutlineComment></AiOutlineComment>
-         <p>{game?.comments?.length}</p>
-        </IconButton>
+        <Tooltip title='Comments' placement='right'>
+         <IconButton
+          aria-label='delete'
+          className={classes.margin}
+          onClick={() => {
+           setgameData1([
+            ...gameData1,
+            (game.showComments = !game.showComments),
+           ]);
+          }}
+         >
+          <AiOutlineComment></AiOutlineComment>
+          <p>{game?.comments?.length}</p>
+         </IconButton>
+        </Tooltip>
+
         {game.showComments ? (
          <div>
           {game.comments.map((comment, index) => (
            <div key={index} className='comments'>
-            <p>{comment.id}:</p>
+            <p>{comment.user}:</p>
             <p>{comment.text}</p>
            </div>
           ))}
@@ -224,37 +393,54 @@ const Games = () => {
                    {
                     id: game.id,
                     text: newComments[game.id],
+                    user: auth.userName,
                    },
                   ],
                  }
                : item
              )
             );
+            console.log(game);
+            // setMovies(prevMovies => ([...prevMovies, ...result]));
+
             setNewComments({ ...newComments, [game.id]: '' });
-            console.log(newComments);
            }}
           >
            Add Comment
           </Button>
+          <button
+           onClick={() => {
+            try {
+             addCommentRequest(game);
+            } catch (error) {
+             console.lot(error.message);
+            }
+            console.log(game);
+           }}
+          >
+           Update
+          </button>
          </div>
         ) : null}
-        <IconButton
-         aria-label='delete'
-         className={classes.margin}
-         onClick={() => {
-          setgameData1([
-           ...gameData1,
-           (game.showVideo = !game.showVideo),
-           (game.arrowDown = !game.arrowDown),
-          ]);
-         }}
-        >
-         {game.arrowDown ? (
-          <AiOutlineArrowDown></AiOutlineArrowDown>
-         ) : (
-          <AiOutlineArrowUp></AiOutlineArrowUp>
-         )}
-        </IconButton>
+        <Tooltip title='More info' placement='right'>
+         <IconButton
+          aria-label='delete'
+          className={classes.margin}
+          onClick={() => {
+           setgameData1([
+            ...gameData1,
+            (game.showVideo = !game.showVideo),
+            (game.arrowDown = !game.arrowDown),
+           ]);
+          }}
+         >
+          {game.arrowDown ? (
+           <AiOutlineArrowDown></AiOutlineArrowDown>
+          ) : (
+           <AiOutlineArrowUp></AiOutlineArrowUp>
+          )}
+         </IconButton>
+        </Tooltip>
        </div>
       </div>
      ) : null

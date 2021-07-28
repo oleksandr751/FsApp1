@@ -1,17 +1,35 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Button, makeStyles, TextField } from '@material-ui/core';
+import {
+ Button,
+ IconButton,
+ makeStyles,
+ TextField,
+ Tooltip,
+} from '@material-ui/core';
 import { AuthContext } from '../context/AuthContext';
 import { useHttp } from '../hooks/http.hook';
 import { useMessage } from '../hooks/message.hook';
+import { AiOutlinePlusCircle } from 'react-icons/ai';
 
 export const AuthPage = () => {
  const auth = useContext(AuthContext);
  const { loading, error, request, clearErrors } = useHttp();
  const message = useMessage();
  const [form, setForm] = useState({
+  email1: '',
+  password1: '',
+ });
+ const [signUpForm, setSignUpForm] = useState({
+  id: Math.floor(Math.random() * 10000),
   email: '',
   password: '',
+  username: '',
+  avatar: '',
+  friends: [],
+  games: [],
+  comments: [],
  });
+ const [toggleSignUp, setToggleSignUp] = useState(false);
  const useStyles = makeStyles((theme) => ({
   root: {
    '& .MuiTextField-root': {
@@ -33,16 +51,21 @@ export const AuthPage = () => {
 
  const handleSignUp = async () => {
   try {
-   const data = await request('/api/auth/register', 'POST', { ...form });
+   const data = await request('/api/auth/register', 'POST', { signUpForm });
    console.log('Data', data);
-  } catch (e) {}
+  } catch (e) {
+   console.log(e.message);
+   console.log(signUpForm);
+  }
  };
 
  const handleSignIn = async () => {
   try {
    const data = await request('/api/auth/login', 'POST', { ...form });
-   auth.login(data.token, data.userId);
-  } catch (e) {}
+   auth.login(data.token, data.userId, data.username);
+  } catch (e) {
+   console.log(e.message);
+  }
  };
 
  const handleChange = (e) => {
@@ -51,23 +74,50 @@ export const AuthPage = () => {
    [e.target.name]: e.target.value,
   });
  };
+ const handleSignUpChange = (e) => {
+  setSignUpForm({
+   ...signUpForm,
+   [e.target.name]: e.target.value,
+  });
+ };
 
  return (
   <div className='authForm1' id='authForm1'>
    <div id='authLayout'>
-    <div id='authLayout'>
-     <h1>Auth page</h1>
+    <h1>Auth page</h1>
+    <Tooltip title='Add new Game' placement='right'>
+     <IconButton
+      aria-label='delete'
+      className={classes.margin}
+      onClick={() => {
+       setToggleSignUp(!toggleSignUp);
+      }}
+     >
+      <AiOutlinePlusCircle></AiOutlinePlusCircle>
+     </IconButton>
+    </Tooltip>
+    {toggleSignUp ? (
      <div>
-      <form id='authForm' className={classes.root}>
+      <form>
        <TextField
         className='inputs'
         id='outlined-basic'
-        label='Login'
+        label='Username'
+        variant='outlined'
+        name='username'
+        autoComplete='off'
+        onChange={handleSignUpChange}
+        value={signUpForm.username}
+       ></TextField>
+       <TextField
+        className='inputs'
+        id='outlined-basic'
+        label='Email'
         variant='outlined'
         name='email'
         autoComplete='off'
-        onChange={handleChange}
-        value={form.email}
+        onChange={handleSignUpChange}
+        value={signUpForm.email}
        ></TextField>
        <TextField
         type='password'
@@ -76,19 +126,11 @@ export const AuthPage = () => {
         name='password'
         label='Password'
         variant='outlined'
-        onChange={handleChange}
-        value={form.password}
+        onChange={handleSignUpChange}
+        value={signUpForm.password}
        ></TextField>
        <Button
-        id='button1'
-        variant='contained'
-        color='primary'
-        onClick={handleSignIn}
-       >
-        Sign in
-       </Button>
-       <Button
-        id='button1'
+        id='button12'
         variant='contained'
         color='primary'
         onClick={handleSignUp}
@@ -97,8 +139,39 @@ export const AuthPage = () => {
        </Button>
       </form>
      </div>
+    ) : null}
+    <div>
+     <form id='authForm' className={classes.root}>
+      <TextField
+       className='inputs'
+       id='outlined-basic'
+       label='Login'
+       variant='outlined'
+       name='email1'
+       autoComplete='off'
+       onChange={handleChange}
+       value={form.email}
+      ></TextField>
+      <TextField
+       type='password'
+       className='inputs123'
+       id='outlined-basic1'
+       name='password1'
+       label='Password'
+       variant='outlined'
+       onChange={handleChange}
+       value={form.password}
+      ></TextField>
+      <Button
+       id='button1'
+       variant='contained'
+       color='primary'
+       onClick={handleSignIn}
+      >
+       Sign in
+      </Button>
+     </form>
     </div>
-    <h1>Auth page</h1>
    </div>
   </div>
  );

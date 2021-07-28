@@ -11,18 +11,25 @@
  flex-direction: row;
  align-items: center;
  justify-content: center;
- border: 2px solid #220549;
- border-color: #1b1f35;
+
+ border-color: #4e54c8;
  border-width: medium;
- padding: 20px;
+ padding: 70px;
  width: 100%;
 }
+#addGameForm{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .eachGame:hover{
-    padding: 30px;
+    padding: 100px;
     cursor: pointer;
     transition: 800ms;
     
 }
+
 .eachGameImage{
 position: relative;
 }
@@ -119,6 +126,7 @@ position: relative;
 }
 .searchBar {
  width: 200px;
+ margin-top: 30px;
  margin-bottom: 30px;
 }
 .comments{
@@ -131,6 +139,49 @@ position: relative;
  margin: auto;
  font-size: 40px;
 }
+#box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  height: 200px;
+  color: white;
+  font-family: 'Raleway';
+  font-size: 2.5rem;
+}
+.gradient-border {
+  --borderWidth: 3px;
+  background: #1D1F20;
+  position: relative;
+  border-radius: var(--borderWidth);
+}
+.gradient-border:after {
+  content: '';
+  position: absolute;
+  top: calc(-1 * var(--borderWidth));
+  left: calc(-1 * var(--borderWidth));
+  height: calc(100% + var(--borderWidth) * 2);
+  width: calc(100% + var(--borderWidth) * 2);
+  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+  border-radius: calc(2 * var(--borderWidth));
+  z-index: -1;
+  animation: animatedgradient 3s ease alternate infinite;
+  background-size: 300% 300%;
+}
+
+
+@keyframes animatedgradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
 
 @keyframes gradient {
  0% {
