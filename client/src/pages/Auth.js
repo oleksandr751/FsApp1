@@ -19,9 +19,8 @@ import UserPage from './UserPage';
 import Users from './Users';
 
 const Auth = () => {
- const { token, userId, userName, login, logout } = useAuth();
+ const { token, userId, userName, eMail, login, logout } = useAuth();
  const isAuthenticated = !!token;
- const username = userName;
  const routes = useRoutes(isAuthenticated);
  const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,6 +58,7 @@ const Auth = () => {
      isAuthenticated,
      userId,
      userName,
+     eMail,
     }}
    >
     <div>
@@ -66,7 +66,7 @@ const Auth = () => {
       <div>
        <Router>
         <Navbar />
-        <p>{userName}</p>
+        <p>{eMail}</p>
         <Switch>
          <Route path='/' exact component={Home} />
          <Route path='/reports' component={Reports} />

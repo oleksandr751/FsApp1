@@ -24,7 +24,7 @@ router.post('/addComments', async (req, res) => {
    { comments: game.comments }
   );
 
-  res.status(201).json({ game });
+  res.status(201).json({ game1 });
  } catch (e) {
   res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова' });
  }

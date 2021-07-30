@@ -13,7 +13,7 @@ import { useHttp } from '../hooks/http.hook';
 
 function Navbar() {
  const auth = useContext(AuthContext);
- const userName1 = auth.userName;
+
  const history = useHistory();
  const location = useLocation();
  const { request } = useHttp();
@@ -29,8 +29,10 @@ function Navbar() {
  useEffect(() => {
   const fetchData = async () => {
    try {
+    const eMail1 = auth.eMail;
+    console.log(auth.eMail);
     const response = await request('/api/auth/getMainUser', 'POST', {
-     userName1,
+     eMail1,
     });
     setMainUserData(response);
    } catch (error) {
@@ -39,7 +41,7 @@ function Navbar() {
   };
 
   fetchData();
- }, []);
+ }, [auth.eMail, request]);
  return (
   <>
    <IconContext.Provider value={{ color: '#fff' }}>

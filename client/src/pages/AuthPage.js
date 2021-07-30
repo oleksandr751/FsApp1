@@ -62,7 +62,8 @@ export const AuthPage = () => {
  const handleSignIn = async () => {
   try {
    const data = await request('/api/auth/login', 'POST', { ...form });
-   auth.login(data.token, data.userId, data.username);
+   auth.login(data.token, data.userId, data.username, data.email);
+   console.log(data);
   } catch (e) {
    console.log(e.message);
   }

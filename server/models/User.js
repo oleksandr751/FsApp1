@@ -9,6 +9,7 @@ const schema = new Schema({
  friends: [{ type: Object }],
  games: [{ type: Object }],
  comments: [{ type: Object }],
+ description: { type: String },
 });
 
 module.exports = model('User', schema);

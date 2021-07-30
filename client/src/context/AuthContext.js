@@ -9,4 +9,5 @@ export const AuthContext = createContext({
  logout: nope,
  isAuthenticated: false,
  userName: '',
+ eMail: '',
 });

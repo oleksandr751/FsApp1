@@ -84,7 +84,12 @@ router.post(
     expiresIn: '1h',
    });
 
-   res.json({ token, userId: user.id, username: user.username });
+   res.json({
+    token,
+    userId: user.id,
+    username: user.username,
+    email: user.email,
+   });
   } catch (e) {
    res.status(500).json({ message: 'Something went wrong' });
   }
@@ -101,9 +106,9 @@ router.get('/getUsers', async (req, res) => {
 });
 router.post('/getMainUser', async (req, res) => {
  try {
-  const { userName1 } = req.body;
-  console.log(userName1);
-  const users = await User.findOne({ username: userName1 });
+  const { eMail1 } = req.body;
+  console.log(eMail1);
+  const users = await User.findOne({ email: eMail1 });
   res.json(users);
  } catch (e) {
   res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова' });
