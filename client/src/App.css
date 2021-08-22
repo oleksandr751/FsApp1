@@ -27,25 +27,42 @@ html {
 div.postsContainer {
  padding: 20px;
 }
-#authLayout{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%)
+#authLayout {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ margin: 0;
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ margin-right: -50%;
+ transform: translate(-50%, -50%);
 }
-#authForm{
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+#authForm {
+ margin-top: 20px;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
 }
-#button1{
-    margin-top: 20px;
+#button1 {
+ margin-top: 20px;
+}
+.eachUserLink {
+ cursor: pointer;
+ display: flex;
+ flex-direction: row;
+ align-items: center;
+ width: 250px;
+ border: 2px solid #000000;
+ border-color: #0f1b5a;
+ border-width: thick;
+}
+.eachUserLink p {
+ padding-left: 10px;
+}
+.eachUser {
+ margin-top: 10px;
+ margin-bottom: 10px;
 }

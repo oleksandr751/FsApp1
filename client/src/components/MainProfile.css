@@ -1,4 +1,5 @@
 .mainProfile1 {
+ margin-top: 20px;
  z-index: -1;
  display: flex;
  flex-direction: row;
@@ -8,7 +9,9 @@
 .mainProfile {
  z-index: -1;
 }
-
+.redirectToReviewedGames {
+ cursor: pointer;
+}
 .profileImage {
  width: 305px;
  height: 305px;

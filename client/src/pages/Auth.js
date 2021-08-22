@@ -8,6 +8,8 @@ import MainProfile from '../components/MainProfile';
 import Navbar from '../components/Navbar11';
 import Posts from '../components/Posts';
 import Profile from '../components/Profile';
+import RandomUserReviewedGames from '../components/RandomUserReviewedGames';
+import ReviewedGames from '../components/ReviewedGames';
 import { UsersData } from '../components/UsersData';
 import { AuthContext } from '../context/AuthContext';
 import { useAuth } from '../hooks/auth.hook';
@@ -15,6 +17,7 @@ import { useHttp } from '../hooks/http.hook';
 import { useRoutes } from '../routes';
 import Games from './Games';
 import Home from './Home';
+import OtherUserPage from './OtherUserPage';
 import Products from './Products';
 import Reports from './Reports';
 import UserPage from './UserPage';
@@ -42,6 +45,7 @@ const Auth = () => {
  const [usersData, setUsersData] = useState([]);
  const [gamesData, setGamesData] = useState([]);
  const [mainUserData, setMainUserData] = useState({});
+ const [selectedUser, setSelectedUser] = useState({});
  const [isAuth, setIsAuth] = useState(false);
  const initialState = {
   email: '',
@@ -94,6 +98,7 @@ const Auth = () => {
      usersData,
      gamesData,
      mainUserData,
+     selectedUser,
     }}
    >
     <div>
@@ -101,7 +106,7 @@ const Auth = () => {
       <div>
        <Router>
         <Navbar />
-        <p>{eMail}</p>
+        {/* <p>{eMail}</p> */}
         <Switch>
          <Route path='/' exact component={Home} />
          <Route path='/reports' component={Reports} />
@@ -111,6 +116,11 @@ const Auth = () => {
          <Route path='/posts' component={Posts} />
          <Route path='/user' component={Profile}></Route>
          <Route path='/profile' component={MainProfile}></Route>
+         <Route path='/reviewedGames' component={ReviewedGames}></Route>
+         <Route
+          path='/randomUserReviewedGames'
+          component={RandomUserReviewedGames}
+         ></Route>
         </Switch>
        </Router>
       </div>

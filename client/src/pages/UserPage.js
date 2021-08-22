@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
  BrowserRouter as Router,
  Switch,
@@ -8,48 +8,40 @@ import {
 } from 'react-router-dom';
 import Profile from '../components/Profile';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 export const UserPage = () => {
+ const auth = useContext(AuthContext);
  const history = useHistory();
  const location = useLocation();
  const locationData = location.state;
- const [userData, setUserData] = useState([]);
- useEffect(() => {
-  const fetchData = async () => {
-   // You can await here
-   await fetch('/api/auth/getUsers')
-    .then((response) => response.json())
-    .then((data) =>
-     setUserData(data.map((game) => ({ ...game, id: game.id })))
-    );
 
-   // ...
-  };
-
-  fetchData();
- }, []);
-
- console.log(userData);
+ console.log(auth.usersData);
  return (
   <div>
-   <h1>Users Page</h1>
-
+   <h1>Registered Users: {auth.usersData.length}</h1>
    <nav>
     <ul>
-     {userData.map((user) => {
+     {auth.usersData.map((user, idx) => {
       return (
-       <li key={user.id}>
-        {/* <Link to='/user' state={user.username}>
-         {user.username}
-        </Link> */}
-        <button
+       <div key={idx} className='eachUser'>
+        <a
+         className='eachUserLink'
          onClick={() => {
+          auth.selectedUser = user;
           history.push({ pathname: 'user', state: { user } });
          }}
         >
-         {user.username}
-        </button>
-       </li>
+         <img
+          width={50}
+          height={50}
+          src={
+           user.avatar ? user.avatar : 'https://asaqifab.com/images/noimage.jpg'
+          }
+         ></img>
+         <p>{user.username}</p>
+        </a>
+       </div>
       );
      })}
     </ul>

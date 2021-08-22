@@ -5,6 +5,7 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { useLocation } from 'react-router-dom';
 import { useHttp } from '../hooks/http.hook';
 import { AiFillEdit } from 'react-icons/ai';
+import { useHistory } from 'react-router';
 import { makeStyles } from '@material-ui/core/styles';
 import Fade from '@material-ui/core/Fade';
 import { GamesData } from '../components/GamesData';
@@ -44,6 +45,7 @@ const MainProfile = (props) => {
  const classes = useStyles();
  //********************************************************************* */
  const auth = useContext(AuthContext);
+ const history = useHistory();
  const [userData, setUserData] = useState(auth.mainUserData);
  const [game, setGame] = useState({});
  const initialState = {
@@ -329,7 +331,15 @@ const MainProfile = (props) => {
          : userData.avatar
        }
       ></img>
-      <p>Reviewed Games {userData.games.length}</p>
+      <a
+       className='redirectToReviewedGames'
+       onClick={() => {
+        history.push('/reviewedGames');
+       }}
+      >
+       {' '}
+       <p>Reviewed Games {userData.games.length}</p>
+      </a>
       <p>Friends {userData.friends.length}</p>
       <p>Posts {userData.comments.length}</p>
      </div>

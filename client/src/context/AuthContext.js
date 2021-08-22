@@ -13,4 +13,5 @@ export const AuthContext = createContext({
  gamesData: [],
  usersData: [],
  mainUserData: {},
+ selectedUser: {},
 });

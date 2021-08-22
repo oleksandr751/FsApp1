@@ -426,6 +426,15 @@ const Games = () => {
          <div>
           {game.comments.map((comment, index) => (
            <div key={index} className='comments'>
+            <img
+             src={
+              comment.avatar
+               ? comment.avatar
+               : 'https://asaqifab.com/images/noimage.jpg'
+             }
+             width={50}
+             height={50}
+            ></img>
             <p>{comment.user}:</p>
             <p>{comment.text}</p>
            </div>
@@ -452,6 +461,7 @@ const Games = () => {
                     id: game.id,
                     text: newComments[game.id],
                     user: auth.userName,
+                    avatar: auth.mainUserData.avatar,
                    },
                   ],
                  }
