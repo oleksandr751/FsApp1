@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { GamesData } from '../components/GamesData';
 import StarRatingComponent from 'react-star-rating-component';
 import { makeStyles } from '@material-ui/core/styles';
+import Rating from '@material-ui/lab/Rating';
 import {
  AiOutlineComment,
  AiOutlineArrowDown,
@@ -75,6 +76,9 @@ const Games = () => {
  };
  const [addGameInputs, setAddGameInputs] = useState(initialState);
  const [toggleAddGame, setToggleAddGame] = useState(false);
+ const [avarageMark, setAvarageMark] = useState([]);
+ const [userData, setUserData] = useState([]);
+ const [valueInput, setValueInput] = useState('');
 
  const [values, setValues] = useState({
   searchBar: '',
@@ -93,7 +97,30 @@ const Games = () => {
   id: 1,
   id2: 2,
  });
+ const arrayOfMarks = [];
 
+ const calculateAvarageMark = () => {
+  gameData1.map((game, idx) => {
+   let marks = [];
+   userData.map((user, index) => {
+    user.games.map((game1, idx1) => {
+     if (game1.title === game.title && game1) {
+      marks.push(game1.mark);
+      arrayOfMarks.push({ title: game.title, marks: marks, sum: 0 });
+     } else return;
+    });
+   });
+  });
+  arrayOfMarks.map((game3, idx3) => {
+   let sum = 0;
+   for (let i = 0; i < game3.marks.length; i++) {
+    sum = sum + game3.marks[i];
+   }
+   game3.sum = sum / game3.marks.length;
+  });
+  setAvarageMark(arrayOfMarks.map((game) => ({ ...game, title: game.title })));
+  console.log(arrayOfMarks);
+ };
  const addGameRequest = async () => {
   try {
    const response = await request('/api/games/add', 'POST', { addGameInputs });
@@ -148,14 +175,37 @@ const Games = () => {
  const handleChangeAddGameInputs = (e) => {
   setAddGameInputs({ ...addGameInputs, [e.target.name]: e.target.value });
  };
+
+ const postAvarageMark = async () => {
+  try {
+   const response1 = await request('/api/games/postAvarageMark', 'POST', {
+    avarageMark,
+   });
+   console.log(response1);
+   console.log(avarageMark);
+  } catch (error) {
+   console.log(avarageMark);
+   console.log(error.message);
+  }
+ };
+
  useEffect(() => {
   const fetchData = async () => {
    // You can await here
-   await fetch('/api/games/getGames')
-    .then((response) => response.json())
-    .then((data) =>
-     setgameData1(data.map((game) => ({ ...game, id: game.id })))
-    );
+   try {
+    await fetch('/api/games/getGames')
+     .then((response) => response.json())
+     .then((data) =>
+      setgameData1(data.map((game) => ({ ...game, id: game.id })))
+     );
+    await fetch('/api/auth/getUsers')
+     .then((response) => response.json())
+     .then((data) =>
+      setUserData(data.map((game) => ({ ...game, id: game.id })))
+     );
+   } catch (e) {
+    console.log(e.message);
+   }
 
    // ...
   };
@@ -174,6 +224,7 @@ const Games = () => {
      className={classes.margin}
      onClick={() => {
       setToggleAddGame(!toggleAddGame);
+      calculateAvarageMark();
      }}
     >
      <AiOutlinePlusCircle></AiOutlinePlusCircle>
@@ -254,6 +305,14 @@ const Games = () => {
        onClick={addGameRequest}
       >
        Add Game
+      </Button>
+      <Button
+       id='createPostButton'
+       variant='contained'
+       color='primary'
+       onClick={postAvarageMark}
+      >
+       Update Games
       </Button>
      </form>
     </div>
@@ -339,15 +398,14 @@ const Games = () => {
           {/* <img className="awards" alt="awards" src={game.awards} /> */}
          </div>
         ) : null}
-
-        <StarRatingComponent
+        <h2 className='averageMark'>{`Average mark: ${game.rating}/10`}</h2>
+        <Rating
          className='starRate'
-         name={game.title}
-         value={starValue.rating}
-         onStarClick={onStarClick.bind(this)}
-         //  onStarHover={}
-         starCount={10}
-        ></StarRatingComponent>
+         value={game.rating}
+         precision={0.1}
+         max={10}
+         readOnly
+        ></Rating>
         <Tooltip title='Comments' placement='right'>
          <IconButton
           aria-label='delete'

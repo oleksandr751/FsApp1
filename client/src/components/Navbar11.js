@@ -15,33 +15,14 @@ function Navbar() {
  const auth = useContext(AuthContext);
 
  const history = useHistory();
- const location = useLocation();
- const { request } = useHttp();
  const handleSignOut = (event) => {
   event.preventDefault();
   auth.logout();
   history.push('/');
  };
  const [sidebar, setSidebar] = useState(false);
- const [mainUserData, setMainUserData] = useState({});
  const showSidebar = () => setSidebar(!sidebar);
- const asg_Kidegre = true;
- useEffect(() => {
-  const fetchData = async () => {
-   try {
-    const eMail1 = auth.eMail;
-    console.log(auth.eMail);
-    const response = await request('/api/auth/getMainUser', 'POST', {
-     eMail1,
-    });
-    setMainUserData(response);
-   } catch (error) {
-    console.log(error.message);
-   }
-  };
 
-  fetchData();
- }, [auth.eMail, request]);
  return (
   <>
    <IconContext.Provider value={{ color: '#fff' }}>
@@ -60,8 +41,9 @@ function Navbar() {
       <li
        className='nav-text'
        onClick={() => {
-        console.log(mainUserData);
-        history.push({ pathname: 'profile', state: mainUserData });
+        // console.log(mainUserData);
+        // history.push({ pathname: 'profile', state: mainUserData });
+        history.push('/profile');
        }}
       >
        <Link to='#'>

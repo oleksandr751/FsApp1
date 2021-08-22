@@ -10,8 +10,10 @@ import { AuthContext } from '../context/AuthContext';
 import { useHttp } from '../hooks/http.hook';
 import { useMessage } from '../hooks/message.hook';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
+import { useAlert } from 'react-alert';
 
 export const AuthPage = () => {
+ const alert = useAlert();
  const auth = useContext(AuthContext);
  const { loading, error, request, clearErrors } = useHttp();
  const message = useMessage();
@@ -52,10 +54,9 @@ export const AuthPage = () => {
  const handleSignUp = async () => {
   try {
    const data = await request('/api/auth/register', 'POST', { signUpForm });
-   console.log('Data', data);
+   alert.show(data.message);
   } catch (e) {
-   console.log(e.message);
-   console.log(signUpForm);
+   alert.show(e.message);
   }
  };
 
@@ -63,9 +64,9 @@ export const AuthPage = () => {
   try {
    const data = await request('/api/auth/login', 'POST', { ...form });
    auth.login(data.token, data.userId, data.username, data.email);
-   console.log(data);
+   alert.show(data.message);
   } catch (e) {
-   console.log(e.message);
+   alert.show(e.message);
   }
  };
 
@@ -151,7 +152,7 @@ export const AuthPage = () => {
        name='email1'
        autoComplete='off'
        onChange={handleChange}
-       value={form.email}
+       value={form.email1}
       ></TextField>
       <TextField
        type='password'
@@ -161,7 +162,7 @@ export const AuthPage = () => {
        label='Password'
        variant='outlined'
        onChange={handleChange}
-       value={form.password}
+       value={form.password1}
       ></TextField>
       <Button
        id='button1'

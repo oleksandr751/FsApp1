@@ -121,6 +121,10 @@ position: relative;
 .trailers{
     margin:30px
 }
+.averageMark{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 .starRate {
  font-size: 35px;
 }

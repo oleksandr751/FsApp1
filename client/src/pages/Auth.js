@@ -1,5 +1,6 @@
 import { Button, makeStyles, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAlert } from 'react-alert';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import MainProfile from '../components/MainProfile';
@@ -10,6 +11,7 @@ import Profile from '../components/Profile';
 import { UsersData } from '../components/UsersData';
 import { AuthContext } from '../context/AuthContext';
 import { useAuth } from '../hooks/auth.hook';
+import { useHttp } from '../hooks/http.hook';
 import { useRoutes } from '../routes';
 import Games from './Games';
 import Home from './Home';
@@ -19,8 +21,11 @@ import UserPage from './UserPage';
 import Users from './Users';
 
 const Auth = () => {
+ const alert = useAlert();
  const { token, userId, userName, eMail, login, logout } = useAuth();
+ const eMail1 = eMail;
  const isAuthenticated = !!token;
+ const { request } = useHttp();
  const routes = useRoutes(isAuthenticated);
  const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +39,9 @@ const Auth = () => {
  const [userData, setUserData] = useState(
   UsersData.map((user) => ({ ...user, id: user.id }))
  );
+ const [usersData, setUsersData] = useState([]);
+ const [gamesData, setGamesData] = useState([]);
+ const [mainUserData, setMainUserData] = useState({});
  const [isAuth, setIsAuth] = useState(false);
  const initialState = {
   email: '',
@@ -46,8 +54,32 @@ const Auth = () => {
    [e.target.name]: e.target.value,
   });
  };
- //   const [isAuthenticated, setIsAuthenticated] = useState(false);
- //   console.log(isAuthenticated);
+ useEffect(() => {
+  const fetchData = async () => {
+   // You can await here
+   try {
+    const response = await request('/api/auth/getMainUser', 'POST', {
+     eMail1,
+    });
+    setMainUserData(response);
+    await fetch('/api/games/getGames')
+     .then((response) => response.json())
+     .then((data) =>
+      setGamesData(data.map((game) => ({ ...game, id: game.id })))
+     );
+    await fetch('/api/auth/getUsers')
+     .then((response) => response.json())
+     .then((data) =>
+      setUsersData(data.map((game) => ({ ...game, id: game.id })))
+     );
+   } catch (e) {
+    alert.show(e.message);
+   }
+
+   // ...
+  };
+  fetchData();
+ }, [eMail1, request]);
  return (
   <>
    <AuthContext.Provider
@@ -59,6 +91,9 @@ const Auth = () => {
      userId,
      userName,
      eMail,
+     usersData,
+     gamesData,
+     mainUserData,
     }}
    >
     <div>

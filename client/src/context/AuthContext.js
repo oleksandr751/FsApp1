@@ -10,4 +10,7 @@ export const AuthContext = createContext({
  isAuthenticated: false,
  userName: '',
  eMail: '',
+ gamesData: [],
+ usersData: [],
+ mainUserData: {},
 });
