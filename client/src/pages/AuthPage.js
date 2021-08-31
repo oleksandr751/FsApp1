@@ -107,7 +107,7 @@ export const AuthPage = () => {
         label='Username'
         variant='outlined'
         name='username'
-        autoComplete='off'
+        inputProps={{ autocomplete: 'off' }}
         onChange={handleSignUpChange}
         value={signUpForm.username}
        ></TextField>
@@ -117,7 +117,7 @@ export const AuthPage = () => {
         label='Email'
         variant='outlined'
         name='email'
-        autoComplete='off'
+        inputProps={{ autocomplete: 'off' }}
         onChange={handleSignUpChange}
         value={signUpForm.email}
        ></TextField>
@@ -128,6 +128,10 @@ export const AuthPage = () => {
         name='password'
         label='Password'
         variant='outlined'
+        inputProps={{
+         autocomplete: 'new',
+         form: { autoComplete: 'off' },
+        }}
         onChange={handleSignUpChange}
         value={signUpForm.password}
        ></TextField>
@@ -150,7 +154,7 @@ export const AuthPage = () => {
        label='Login'
        variant='outlined'
        name='email1'
-       autoComplete='off'
+       inputProps={{ autoComplete: 'off' }}
        onChange={handleChange}
        value={form.email1}
       ></TextField>

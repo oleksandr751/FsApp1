@@ -8,12 +8,24 @@
 }
 
 body {
+ height: 100%;
+ width: 100%;
  font-family: 'Exo', sans-serif;
 }
 html {
  height: 100%;
+ width: 100%;
 }
-
+.navbar {
+ position: fixed;
+ top: 0;
+ width: 100%;
+ padding: 10px;
+ transition: top 0.6s;
+}
+.usersPage {
+ margin-top: 150px;
+}
 .home,
 .reports,
 .products {
@@ -65,4 +77,10 @@ div.postsContainer {
 .eachUser {
  margin-top: 10px;
  margin-bottom: 10px;
+}
+.randomUserReviewedGameHeader h1 {
+ margin-top: 30px;
+ text-align: center;
+ justify-content: center;
+ align-items: center;
 }

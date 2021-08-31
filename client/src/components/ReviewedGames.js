@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import Rating from '@material-ui/lab/Rating';
 import { AuthContext } from '../context/AuthContext';
 
 const ReviewedGames = () => {
@@ -6,17 +7,31 @@ const ReviewedGames = () => {
 
  console.log(auth.mainUserData);
  return (
-  <div>
+  <div className='gamesPage'>
    <h1>All games reviewed by {auth.mainUserData.username}</h1>
-   {auth.mainUserData.games ? (
+   {auth.mainUserData.games[0] ? (
     auth.mainUserData.games.map((game, idx) => (
-     <div>
-      <div>
-       <img src={game.poster} width={200} height={200}></img>
+     <div className='eachGame'>
+      <div className='eachGameImage'>
+       <a className='photo'>
+        <img alt={game.title} src={game.poster} width='350' height='400'></img>
+        <div className='glow-wrap'>
+         <i className='glow'></i>
+        </div>
+       </a>
       </div>
-      <h3>{game.title}</h3>
-      <h3>{`${game.mark}/10`}</h3>
-      <legend>{game.review}</legend>
+      <div className='eachGameDescription'>
+       <h1>{game.title}</h1>
+       <h1>{`${game.mark}/10`}</h1>
+       <legend>{game.review}</legend>
+       <Rating
+        className='starRate'
+        value={game.mark}
+        precision={0.1}
+        max={10}
+        readOnly
+       ></Rating>
+      </div>
      </div>
     ))
    ) : (

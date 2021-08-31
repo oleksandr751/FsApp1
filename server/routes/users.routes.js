@@ -19,7 +19,7 @@ router.post('/updateAvatar', async (req, res) => {
     description: userData.description,
    }
   );
-  res.json(user1);
+  res.status(200).json({ message: 'Data edited successfully!', data: user1 });
  } catch (e) {
   res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова' });
  }

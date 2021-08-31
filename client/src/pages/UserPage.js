@@ -18,7 +18,7 @@ export const UserPage = () => {
 
  console.log(auth.usersData);
  return (
-  <div>
+  <div className='usersPage'>
    <h1>Registered Users: {auth.usersData.length}</h1>
    <nav>
     <ul>
@@ -29,7 +29,7 @@ export const UserPage = () => {
          className='eachUserLink'
          onClick={() => {
           auth.selectedUser = user;
-          history.push({ pathname: 'user', state: { user } });
+          history.push('profile');
          }}
         >
          <img

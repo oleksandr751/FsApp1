@@ -15,11 +15,13 @@ import { AuthContext } from '../context/AuthContext';
 import { useAuth } from '../hooks/auth.hook';
 import { useHttp } from '../hooks/http.hook';
 import { useRoutes } from '../routes';
+import AuthPage from './AuthPage';
 import Games from './Games';
 import Home from './Home';
 import OtherUserPage from './OtherUserPage';
 import Products from './Products';
 import Reports from './Reports';
+import SelectedGame from './SelectedGame';
 import UserPage from './UserPage';
 import Users from './Users';
 
@@ -46,6 +48,8 @@ const Auth = () => {
  const [gamesData, setGamesData] = useState([]);
  const [mainUserData, setMainUserData] = useState({});
  const [selectedUser, setSelectedUser] = useState({});
+ const [selectedGame, setSelectedGame] = useState({});
+ const [loading, setLoading] = useState(true);
  const [isAuth, setIsAuth] = useState(false);
  const initialState = {
   email: '',
@@ -76,6 +80,7 @@ const Auth = () => {
      .then((data) =>
       setUsersData(data.map((game) => ({ ...game, id: game.id })))
      );
+    response ? setLoading(false) : setLoading(true);
    } catch (e) {
     alert.show(e.message);
    }
@@ -83,7 +88,7 @@ const Auth = () => {
    // ...
   };
   fetchData();
- }, [eMail1, request]);
+ }, [eMail1, request, alert]);
  return (
   <>
    <AuthContext.Provider
@@ -99,30 +104,41 @@ const Auth = () => {
      gamesData,
      mainUserData,
      selectedUser,
+     selectedGame,
     }}
    >
     <div>
      {isAuthenticated ? (
       <div>
-       <Router>
-        <Navbar />
-        {/* <p>{eMail}</p> */}
-        <Switch>
-         <Route path='/' exact component={Home} />
-         <Route path='/reports' component={Reports} />
-         <Route path='/products' component={Products} />
-         <Route path='/games' component={Games} />
-         <Route path='/users' component={UserPage} />
-         <Route path='/posts' component={Posts} />
-         <Route path='/user' component={Profile}></Route>
-         <Route path='/profile' component={MainProfile}></Route>
-         <Route path='/reviewedGames' component={ReviewedGames}></Route>
-         <Route
-          path='/randomUserReviewedGames'
-          component={RandomUserReviewedGames}
-         ></Route>
-        </Switch>
-       </Router>
+       {loading ? (
+        <div>
+         <img
+          alt='loading....'
+          src='https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif'
+         ></img>
+        </div>
+       ) : (
+        <Router>
+         <Navbar />
+         {/* <p>{eMail}</p> */}
+         <Switch>
+          <Route path='/' exact component={Home} />
+          <Route path='/reports' component={Reports} />
+          <Route path='/products' component={Products} />
+          <Route path='/games' component={Games} />
+          <Route path='/users' component={UserPage} />
+          <Route path='/posts' component={Posts} />
+          <Route path='/profile' component={Profile}></Route>
+          <Route path='/mainProfile' component={MainProfile}></Route>
+          <Route path='/reviewedGames' component={ReviewedGames}></Route>
+          <Route path='/selectedGame' component={SelectedGame}></Route>
+          <Route
+           path='/randomUserReviewedGames'
+           component={RandomUserReviewedGames}
+          ></Route>
+         </Switch>
+        </Router>
+       )}
       </div>
      ) : (
       <div className='container'>{routes}</div>

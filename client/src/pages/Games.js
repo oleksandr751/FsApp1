@@ -20,6 +20,7 @@ import { useHttp } from '../hooks/http.hook';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useAlert } from 'react-alert';
 import { AuthContext } from '../context/AuthContext';
+import { useHistory } from 'react-router-dom';
 // import axios from 'axios';
 // import Axios from 'axios';
 
@@ -76,9 +77,11 @@ const Games = () => {
  };
  const [addGameInputs, setAddGameInputs] = useState(initialState);
  const [toggleAddGame, setToggleAddGame] = useState(false);
+ const [showComments, setShowComments] = useState(false);
  const [avarageMark, setAvarageMark] = useState([]);
  const [userData, setUserData] = useState([]);
  const [valueInput, setValueInput] = useState('');
+ const history = useHistory();
 
  const [values, setValues] = useState({
   searchBar: '',
@@ -92,35 +95,35 @@ const Games = () => {
  //     id: element.id,
  //   })),
  // );
- const [gameData1, setgameData1] = useState([]);
+ const [gameData1, setGameData1] = useState([]);
  const [some, setSome] = useState({
   id: 1,
   id2: 2,
  });
  const arrayOfMarks = [];
 
- const calculateAvarageMark = () => {
-  gameData1.map((game, idx) => {
-   let marks = [];
-   userData.map((user, index) => {
-    user.games.map((game1, idx1) => {
-     if (game1.title === game.title && game1) {
-      marks.push(game1.mark);
-      arrayOfMarks.push({ title: game.title, marks: marks, sum: 0 });
-     } else return;
-    });
-   });
-  });
-  arrayOfMarks.map((game3, idx3) => {
-   let sum = 0;
-   for (let i = 0; i < game3.marks.length; i++) {
-    sum = sum + game3.marks[i];
-   }
-   game3.sum = sum / game3.marks.length;
-  });
-  setAvarageMark(arrayOfMarks.map((game) => ({ ...game, title: game.title })));
-  console.log(arrayOfMarks);
- };
+ //  const calculateAvarageMark = () => {
+ //   auth.gamesData.map((game, idx) => {
+ //    let marks = [];
+ //    userData.map((user, index) => {
+ //     user.games.map((game1, idx1) => {
+ //      if (game1.title === game.title && game1) {
+ //       marks.push(game1.mark);
+ //       arrayOfMarks.push({ title: game.title, marks: marks, sum: 0 });
+ //      } else return;
+ //     });
+ //    });
+ //   });
+ //   arrayOfMarks.map((game3, idx3) => {
+ //    let sum = 0;
+ //    for (let i = 0; i < game3.marks.length; i++) {
+ //     sum = sum + game3.marks[i];
+ //    }
+ //    game3.sum = sum / game3.marks.length;
+ //   });
+ //   setAvarageMark(arrayOfMarks.map((game) => ({ ...game, title: game.title })));
+ //   console.log(arrayOfMarks);
+ //  };
  const addGameRequest = async () => {
   try {
    const response = await request('/api/games/add', 'POST', { addGameInputs });
@@ -148,19 +151,19 @@ const Games = () => {
  //     //  console.log(response);
  //   },
  // );
- const onStarClick = (nextValue) => {
-  setStarValue(
-   gameData1.map((game1) =>
-    gameData1.id === game1.id
-     ? {
-        ...game1,
-        rating: nextValue,
-       }
-     : game1
-   )
-  );
-  //   setStarValue({ rating: nextValue });
- };
+ //  const onStarClick = (nextValue) => {
+ //   setStarValue(
+ //    auth.gamesData.map((game1) =>
+ //     auth.gamesData.id === game1.id
+ //      ? {
+ //         ...game1,
+ //         rating: nextValue,
+ //        }
+ //      : game1
+ //    )
+ //   );
+ //   //   setStarValue({ rating: nextValue });
+ //  };
 
  const [newComments, setNewComments] = useState({ 1: '', 2: '' });
 
@@ -193,11 +196,6 @@ const Games = () => {
   const fetchData = async () => {
    // You can await here
    try {
-    await fetch('/api/games/getGames')
-     .then((response) => response.json())
-     .then((data) =>
-      setgameData1(data.map((game) => ({ ...game, id: game.id })))
-     );
     await fetch('/api/auth/getUsers')
      .then((response) => response.json())
      .then((data) =>
@@ -211,9 +209,6 @@ const Games = () => {
   };
   fetchData();
  }, []);
- useEffect(() => {
-  console.log(gameData1);
- }, [gameData1]);
  //  console.log(gamed.comments.length);
  return (
   <div className='gamesPage'>
@@ -224,7 +219,6 @@ const Games = () => {
      className={classes.margin}
      onClick={() => {
       setToggleAddGame(!toggleAddGame);
-      calculateAvarageMark();
      }}
     >
      <AiOutlinePlusCircle></AiOutlinePlusCircle>
@@ -329,7 +323,7 @@ const Games = () => {
    {/* {data.map((el) => {
     return <h1>{el.title}</h1>;
    })} */}
-   {gameData1
+   {auth.gamesData
     .filter((value) => {
      if (value.title) {
       if (values.searchBar === '') {
@@ -353,7 +347,13 @@ const Games = () => {
      game.title ? (
       <div key={game.id} className='eachGame'>
        <div className='eachGameImage'>
-        <a className='photo'>
+        <a
+         className='photo'
+         onClick={() => {
+          auth.selectedGame = game;
+          history.push('selectedGame');
+         }}
+        >
          <img
           className='images'
           alt={game.title}
@@ -372,7 +372,7 @@ const Games = () => {
         <legend>{game.description}</legend>
         {game.showVideo ? (
          <div className='additionalInfo'>
-          <iframe
+          {/* <iframe
            className='trailers'
            width='560'
            height='315'
@@ -394,7 +394,7 @@ const Games = () => {
            }}
           >
            <p>{game.score}</p>
-          </div>
+          </div> */}
           {/* <img className="awards" alt="awards" src={game.awards} /> */}
          </div>
         ) : null}
@@ -411,10 +411,7 @@ const Games = () => {
           aria-label='delete'
           className={classes.margin}
           onClick={() => {
-           setgameData1([
-            ...gameData1,
-            (game.showComments = !game.showComments),
-           ]);
+           setShowComments(!showComments);
           }}
          >
           <AiOutlineComment></AiOutlineComment>
@@ -422,7 +419,7 @@ const Games = () => {
          </IconButton>
         </Tooltip>
 
-        {game.showComments ? (
+        {showComments ? (
          <div>
           {game.comments.map((comment, index) => (
            <div key={index} className='comments'>
@@ -449,30 +446,30 @@ const Games = () => {
           ></TextField>
 
           <Button
-           onClick={() => {
-            setgameData1(
-             gameData1.map((item) =>
-              item.id === game.id && newComments[game.id]
-               ? {
-                  ...item,
-                  comments: [
-                   ...item.comments,
-                   {
-                    id: game.id,
-                    text: newComments[game.id],
-                    user: auth.userName,
-                    avatar: auth.mainUserData.avatar,
-                   },
-                  ],
-                 }
-               : item
-             )
-            );
-            console.log(game);
-            // setMovies(prevMovies => ([...prevMovies, ...result]));
+          //  onClick={() => {
+          //   setauth.gamesData(
+          //    auth.gamesData.map((item) =>
+          //     item.id === game.id && newComments[game.id]
+          //      ? {
+          //         ...item,
+          //         comments: [
+          //          ...item.comments,
+          //          {
+          //           id: game.id,
+          //           text: newComments[game.id],
+          //           user: auth.userName,
+          //           avatar: auth.mainUserData.avatar,
+          //          },
+          //         ],
+          //        }
+          //      : item
+          //    )
+          //   );
+          //   console.log(game);
+          //   // setMovies(prevMovies => ([...prevMovies, ...result]));
 
-            setNewComments({ ...newComments, [game.id]: '' });
-           }}
+          //   setNewComments({ ...newComments, [game.id]: '' });
+          //  }}
           >
            Add Comment
           </Button>
@@ -494,13 +491,13 @@ const Games = () => {
          <IconButton
           aria-label='delete'
           className={classes.margin}
-          onClick={() => {
-           setgameData1([
-            ...gameData1,
-            (game.showVideo = !game.showVideo),
-            (game.arrowDown = !game.arrowDown),
-           ]);
-          }}
+          // onClick={() => {
+          //  setauth.gamesData([
+          //   ...auth.gamesData,
+          //   (game.showVideo = !game.showVideo),
+          //   (game.arrowDown = !game.arrowDown),
+          //  ]);
+          // }}
          >
           {game.arrowDown ? (
            <AiOutlineArrowDown></AiOutlineArrowDown>
