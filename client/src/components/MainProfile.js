@@ -524,7 +524,7 @@ const MainProfile = (props) => {
      height={500}
      className='swiper1'
      autoplay={{ delay: 10000, disableOnInteraction: false }}
-     speed={2000}
+     speed={1500}
      direction={'horizontal'}
      spaceBetween={50}
      slidesPerView={1}

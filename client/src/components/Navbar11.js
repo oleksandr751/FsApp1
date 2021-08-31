@@ -64,7 +64,7 @@ const Navbar = () => {
        onClick={() => {
         // console.log(mainUserData);
         // history.push({ pathname: 'profile', state: mainUserData });
-        history.push('/mainProfile');
+        history.push('/');
        }}
       >
        <Link to='#'>
