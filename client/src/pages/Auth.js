@@ -15,7 +15,6 @@ import { AuthContext } from '../context/AuthContext';
 import { useAuth } from '../hooks/auth.hook';
 import { useHttp } from '../hooks/http.hook';
 import { useRoutes } from '../routes';
-import AuthPage from './AuthPage';
 import Games from './Games';
 import Home from './Home';
 import OtherUserPage from './OtherUserPage';
@@ -24,6 +23,7 @@ import Reports from './Reports';
 import SelectedGame from './SelectedGame';
 import UserPage from './UserPage';
 import Users from './Users';
+import loadImage from '../images/loading1.gif';
 
 const Auth = () => {
  const alert = useAlert();
@@ -105,17 +105,17 @@ const Auth = () => {
      mainUserData,
      selectedUser,
      selectedGame,
+     loading,
     }}
    >
-    <div>
+    <>
      {isAuthenticated ? (
       <div>
        {loading ? (
         <div>
-         <img
-          alt='loading....'
-          src='https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif'
-         ></img>
+         <div className='loadingGif'>
+          <img alt='loading....' src={loadImage}></img>
+         </div>
         </div>
        ) : (
         <Router>
@@ -142,9 +142,9 @@ const Auth = () => {
        )}
       </div>
      ) : (
-      <div className='container'>{routes}</div>
+      <>{routes}</>
      )}
-    </div>
+    </>
    </AuthContext.Provider>
   </>
  );

@@ -28,11 +28,11 @@ function App() {
   transition: transitions.FADE,
  };
  return (
-  <div>
+  <>
    <AlertProvider template={AlertTemplate} {...options}>
     <Auth />
    </AlertProvider>
-  </div>
+  </>
  );
 }
 
