@@ -1,19 +1,131 @@
-.mainProfile1 {
- margin-top: 20px;
+.backgroundDiv123 {
  z-index: -1;
- display: flex;
- flex-direction: row;
- justify-content: center;
+ height: 100%;
  width: 100%;
 }
-.mainProfile {
- z-index: -1;
- margin-top: 150px;
-}
-.addGameReview {
+.mainProfileBackground {
+ width: 100%;
+ background: url('../images/mainBg.jpg') no-repeat center center fixed;
+ -webkit-background-size: cover;
+ -moz-background-size: cover;
+ -o-background-size: cover;
+ background-size: cover;
  display: flex;
  flex-direction: column;
  justify-content: center;
+ align-items: center;
+}
+.mainProfile {
+ padding-top: 150px;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ width: 70%;
+ justify-content: center;
+ background: url('../images/profileBackground2.jpg');
+ -webkit-background-size: cover;
+ -moz-background-size: cover;
+ -o-background-size: cover;
+ background-size: cover;
+}
+
+.mainProfileGradient {
+ width: 100%;
+ margin-top: -150px;
+ padding-top: 140px;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ /* background-image: linear-gradient(
+  147deg,
+  rgba(255, 255, 255, 0.8) 0%,
+  rgba(199, 199, 199, 0.5) 75%
+ ); */
+}
+.mainProfileComments {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ width: 50%;
+ box-shadow: 10px 10px 5px grey;
+ background-color: white;
+ margin-bottom: 40px;
+ padding-bottom: 20px;
+ padding-top: 20px;
+}
+.mainProfileComments h1 {
+ padding-bottom: 20px;
+}
+.mainProfileComments button {
+ margin-top: 20px;
+}
+.mainProfile1 {
+ padding-bottom: 40px;
+ display: flex;
+ font-size: 24px;
+ flex-direction: row;
+ justify-content: center;
+ align-items: center;
+ /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+ width: 90%;
+ height: 500px;
+ box-shadow: 10px 10px 5px grey;
+ background-color: white;
+ margin-bottom: 40px;
+}
+.favouriteGameTop1 {
+ padding-top: 40px;
+ padding-bottom: 40px;
+ display: flex;
+ width: 90%;
+ box-shadow: 10px 10px 5px grey;
+ background-color: white;
+ margin-bottom: 40px;
+ flex-direction: column;
+ align-items: center;
+}
+.favouriteGameTop1 h3,
+legend {
+ font-size: 24px;
+}
+/* .MuiTextField-root fieldset {
+ border-color: white;
+}
+.MuiTextField-root input {
+ color: white;
+ border-color: white;
+}
+.MuiTextField-root textarea {
+ color: white;
+ border-color: white;
+}
+.MuiTextField-root label {
+ color: white;
+ border-color: white;
+} */
+.MuiTextField-root {
+ /* color: white;
+ border-color: white; */
+ width: 200px;
+}
+.addGameReview {
+ padding-top: 40px;
+ padding-bottom: 40px;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ width: 90%;
+ box-shadow: 10px 10px 5px grey;
+ background-color: white;
+ margin-bottom: 40px;
+}
+
+.favouriteGameTop1Info {
+ display: flex;
+ flex-direction: column;
  align-items: center;
 }
 .redirectToReviewedGames {
@@ -25,17 +137,16 @@
 .redirectToReviewedGames p:hover {
  width: 100%;
  border-bottom: 2px solid #000000;
- border-color: #0f1b5a;
- border-width: thin;
+ border-color: #000000;
+ border-width: medium;
 }
 
 .profileImage img {
  border: 2px solid #000000;
- border-color: #0f1b5a;
+ border-color: #000000;
  border-width: thick;
 }
 .swiperSlide {
- z-index: -1;
  display: flex;
  flex-direction: row;
  justify-content: center;
@@ -59,12 +170,25 @@
 }
 .swiper1 {
 }
-.swiper-container {
- margin-top: 50px;
- padding: 0%;
+.swiper-container h3 {
+ font-size: 24px;
 }
+.swiper-container {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ text-align: center;
+ padding-top: 30px;
+ color: white;
+
+ background: url('../images//mainBg.jpg') no-repeat center center fixed;
+ -webkit-background-size: cover;
+ -moz-background-size: cover;
+ -o-background-size: cover;
+ background-size: cover;
+}
+
 .swiper-wrapper {
- z-index: -1;
 }
 .dataResult {
  width: 300px;
@@ -116,10 +240,14 @@
  flex-direction: row;
 }
 .profileInfo {
- margin-left: 30px;
+ margin-left: 60px;
  display: flex;
  flex-direction: column;
  align-items: center;
+ justify-content: center;
+}
+.profileInfo legend {
+ text-align: center;
 }
 
 .profileInfo legend {
@@ -142,13 +270,60 @@
  align-items: center;
  margin: 20px;
  flex-wrap: wrap;
- width: 800px;
+ width: 100%;
 }
 .favouriteGame {
- padding: 5px;
+ padding: 20px;
 }
 .favouriteGames img {
- border: 2px solid #000000;
- border-color: #0f1b5a;
- border-width: thick;
+ box-shadow: 10px 10px 5px grey;
+}
+.icons svg {
+}
+.icons button:hover {
+ background: rgba(255, 255, 255, 0.3);
+ transform: translateY(-0.25em);
+ border-color: #4481eb;
+}
+.commentsMainProfile {
+ display: flex;
+ flex-direction: row;
+ margin-top: 20px;
+}
+.commentsMainProfileText {
+ padding-left: 20px;
+}
+.swiper-button-next {
+ color: white;
+}
+.swiper-button-prev {
+ color: white;
+}
+/* .commentsParent {
+ width: 500px;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+} */
+.avarageMarks {
+ display: flex;
+ flex-direction: row;
+ justify-content: center;
+ align-items: center;
+ margin-top: 20px;
+ padding-bottom: 20px;
+}
+.avarageMarksDiv {
+ margin-right: 30px;
+ margin-left: 30px;
+}
+.avarageMarks h1 {
+ font-size: 24px;
+}
+.addGameReview h3 {
+ font-size: 24px;
+}
+.profileInfo legend {
+ width: 400px;
 }

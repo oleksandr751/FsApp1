@@ -24,7 +24,44 @@ router.post('/updateAvatar', async (req, res) => {
   res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова' });
  }
 });
+router.post('/updateFavouriteGame', async (req, res) => {
+ try {
+  const { game1, email } = req.body;
+  //   const user = await User.find({ username: userData.username });
+  console.log(game1, email);
+  const user1 = await User.updateOne(
+   { email: email },
+   {
+    favouriteGame: game1,
+   }
+  );
+  res.status(200).json({ message: 'Data edited successfully!', data: user1 });
+ } catch (e) {
+  res
+   .status(500)
+   .json({ message: 'Something went wrong, please try again later!' });
+ }
+});
+router.post('/updateComments', async (req, res) => {
+ try {
+  const { comment, email } = req.body;
+  //   const user = await User.find({ username: userData.username });
+  console.log(comment, email);
 
+  const user1 = await User.updateOne(
+   { email: email },
+   {
+    $push: { comments: comment },
+   }
+  );
+  console.log(user1);
+  res.status(200).json({ message: 'Data edited successfully!', data: user1 });
+ } catch (e) {
+  res
+   .status(500)
+   .json({ message: 'Something went wrong, please try again later!' });
+ }
+});
 router.post('/updateGames', async (req, res) => {
  try {
   const { gameReview } = req.body;

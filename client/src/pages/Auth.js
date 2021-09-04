@@ -110,7 +110,7 @@ const Auth = () => {
    >
     <>
      {isAuthenticated ? (
-      <div>
+      <>
        {loading ? (
         <div>
          <div className='loadingGif'>
@@ -140,7 +140,7 @@ const Auth = () => {
          </Switch>
         </Router>
        )}
-      </div>
+      </>
      ) : (
       <>{routes}</>
      )}

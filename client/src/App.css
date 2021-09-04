@@ -79,3 +79,6 @@ div.postsContainer {
  justify-content: center;
  align-items: center;
 }
+.starRate svg {
+ font-size: 25px;
+}

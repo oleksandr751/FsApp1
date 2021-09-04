@@ -10,6 +10,8 @@ const schema = new Schema({
  games: [{ type: Object }],
  comments: [{ type: Object }],
  description: { type: String },
+ favouriteGame: { type: Object },
+ posts: [{ type: Object }],
 });
 
 module.exports = model('User', schema);
