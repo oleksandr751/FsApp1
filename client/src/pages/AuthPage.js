@@ -134,65 +134,65 @@ export const AuthPage = () => {
     </div>
     <div id='authLayout'>
      {/* <h1>Auth page</h1> */}
-     {/* <Tooltip title='Add new Game' placement='right'>
-     <IconButton
-      aria-label='delete'
-      className={classes.margin}
-      onClick={() => {
-       setToggleSignUp(!toggleSignUp);
-      }}
-     >
-      <AiOutlinePlusCircle></AiOutlinePlusCircle>
-     </IconButton>
-    </Tooltip>
-    {toggleSignUp ? (
-     <div>
-      <form>
-       <TextField
-        className='inputs'
-        id='outlined-basic'
-        label='Username'
-        variant='outlined'
-        name='username'
-        inputProps={{ autoComplete: 'off' }}
-        onChange={handleSignUpChange}
-        value={signUpForm.username}
-       ></TextField>
-       <TextField
-        className='inputs'
-        id='outlined-basic'
-        label='Email'
-        variant='outlined'
-        name='email'
-        inputProps={{ autoComplete: 'off' }}
-        onChange={handleSignUpChange}
-        value={signUpForm.email}
-       ></TextField>
-       <TextField
-        type='password'
-        className='inputs123'
-        id='outlined-basic1'
-        name='password'
-        label='Password'
-        variant='outlined'
-        inputProps={{
-         autocomplete: 'new',
-         form: { autoComplete: 'off' },
-        }}
-        onChange={handleSignUpChange}
-        value={signUpForm.password}
-       ></TextField>
-       <Button
-        id='button12'
-        variant='contained'
-        color='primary'
-        onClick={handleSignUp}
-       >
-        Sign up
-       </Button>
-      </form>
-     </div>
-    ) : null} */}
+     <Tooltip title='Add new Game' placement='right'>
+      <IconButton
+       aria-label='delete'
+       className={classes.margin}
+       onClick={() => {
+        setToggleSignUp(!toggleSignUp);
+       }}
+      >
+       <AiOutlinePlusCircle></AiOutlinePlusCircle>
+      </IconButton>
+     </Tooltip>
+     {toggleSignUp ? (
+      <div>
+       <form>
+        <TextField
+         className='inputs'
+         id='outlined-basic'
+         label='Username'
+         variant='outlined'
+         name='username'
+         inputProps={{ autoComplete: 'off' }}
+         onChange={handleSignUpChange}
+         value={signUpForm.username}
+        ></TextField>
+        <TextField
+         className='inputs'
+         id='outlined-basic'
+         label='Email'
+         variant='outlined'
+         name='email'
+         inputProps={{ autoComplete: 'off' }}
+         onChange={handleSignUpChange}
+         value={signUpForm.email}
+        ></TextField>
+        <TextField
+         type='password'
+         className='inputs123'
+         id='outlined-basic1'
+         name='password'
+         label='Password'
+         variant='outlined'
+         inputProps={{
+          autocomplete: 'new',
+          form: { autoComplete: 'off' },
+         }}
+         onChange={handleSignUpChange}
+         value={signUpForm.password}
+        ></TextField>
+        <Button
+         id='button12'
+         variant='contained'
+         color='primary'
+         onClick={handleSignUp}
+        >
+         Sign up
+        </Button>
+       </form>
+      </div>
+     ) : null}
      <div className='signInForm'>
       <h3>Sign in to your account</h3>
       <form id='authForm' className={classes.root}>

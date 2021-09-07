@@ -1,4 +1,16 @@
-import { Button, Checkbox, Fade, TextField, Tooltip } from '@material-ui/core';
+import {
+ Button,
+ Checkbox,
+ Dialog,
+ DialogActions,
+ DialogContent,
+ DialogContentText,
+ DialogTitle,
+ Fade,
+ IconButton,
+ TextField,
+ Tooltip,
+} from '@material-ui/core';
 import React, { useContext, useEffect, useState } from 'react';
 import {
  BrowserRouter as Router,
@@ -24,6 +36,10 @@ import 'swiper/components/scrollbar/scrollbar.scss';
 import Rating from '@material-ui/lab/Rating';
 import { useAlert } from 'react-alert';
 import { useHttp } from '../hooks/http.hook';
+import { AiOutlineUserAdd } from 'react-icons/ai';
+import { GoReport } from 'react-icons/go';
+import { FiAward } from 'react-icons/fi';
+import { BiUserCheck } from 'react-icons/bi';
 
 const Profile = (props) => {
  const auth = useContext(AuthContext);
@@ -34,10 +50,25 @@ const Profile = (props) => {
  const { request } = useHttp();
  console.log(auth.selectedUser);
  console.log(auth.selectedUser);
+ const notifications = {
+  friendNotification1: {},
+  commentNotification: {},
+  gameNotification: {},
+ };
+ const friendNotification = {
+  from: auth.mainUserData.username,
+  user: auth.mainUserData,
+  to: auth.selectedUser.username,
+  type: 'friendRequest',
+  id: Math.floor(Math.random() * 10000),
+ };
+ const [notification, setNotification] = useState(friendNotification);
  const [comment, setComment] = useState({ username: '', text: '', avatar: '' });
  const [userAvarageMark, setUserAvarageMark] = useState(0);
  const [minMark, setMinMark] = useState(0);
  const [maxMark, setMaxMark] = useState(0);
+ const [open, setOpen] = useState(false);
+ const [isYourFriend, setIsYourFriend] = useState(false);
  const [email, setEmail] = useState(auth.selectedUser.email);
  const calculateAvarageMarkUser = () => {
   let sum = 0;
@@ -48,6 +79,27 @@ const Profile = (props) => {
   sum = Math.round(sum * 10) / 10;
   setUserAvarageMark(sum);
   console.log(sum);
+ };
+ const handleClickOpen = () => {
+  setOpen(true);
+ };
+ const handleClose = () => {
+  setOpen(false);
+ };
+ const handleAddUser = async () => {
+  try {
+   setOpen(false);
+   const response = await request('/api/users/addFriendRequest', 'POST', {
+    notification,
+    email,
+   });
+   alert.show(response.message, { type: 'success' });
+   //  window.location.reload();
+   console.log(response);
+  } catch (error) {
+   setOpen(false);
+   alert.show(error.message, { type: 'error' });
+  }
  };
  const calculateMinMark = () => {
   let min = 10;
@@ -69,11 +121,18 @@ const Profile = (props) => {
    [e.target.name]: e.target.value,
   });
  };
-
+ const isYourFriendFunc = () => {
+  auth.mainUserData.friends.map((friend, idx) => {
+   friend.username === auth.selectedUser.username
+    ? setIsYourFriend(true)
+    : console.log('nope');
+  });
+ };
  useEffect(() => {
   calculateAvarageMarkUser();
   calculateMinMark();
   calculateMaxMark();
+  isYourFriendFunc();
  }, [auth.selectedUser]);
  //  setUserData(
  //   Array.from(locationData).map((user) => ({ ...user, id: user.id }))
@@ -89,13 +148,11 @@ const Profile = (props) => {
  return (
   <div className='backgroundDiv123'>
    <div className='mainProfileBackground'>
-    {' '}
     <div className='mainProfile'>
      <div className='mainProfileGradient'>
       <div className='mainProfile1'>
        <div className='userInfo'>
         <div className='profileImage'>
-         {' '}
          <img
           alt='Avatar'
           width='300px'
@@ -108,7 +165,6 @@ const Profile = (props) => {
          ></img>
         </div>
         <div className='profileInfo'>
-         {' '}
          <h1>
           {auth.selectedUser.username
            ? auth.selectedUser.username
@@ -120,18 +176,65 @@ const Profile = (props) => {
            : 'Profile Description here.......'}
          </legend>
          <div>
-          {' '}
           <a
            className='redirectToReviewedGames'
            onClick={() => {
             history.push('/randomUserReviewedGames');
            }}
           >
-           {' '}
            <p>Reviewed Games {auth.selectedUser.games.length}</p>
           </a>
           <p>Friends {auth.selectedUser.friends.length}</p>
           <p>Posts {auth.selectedUser.comments.length}</p>
+         </div>
+         <div className='userInterractions'>
+          {!isYourFriend ? (
+           <IconButton aria-label='delete' onClick={handleClickOpen}>
+            <AiOutlineUserAdd></AiOutlineUserAdd>
+           </IconButton>
+          ) : (
+           <Tooltip
+            TransitionComponent={Fade}
+            TransitionProps={{ timeout: 600 }}
+            title='This user is already your friend.'
+            placement='top'
+           >
+            <IconButton aria-label='delete'>
+             {' '}
+             <BiUserCheck></BiUserCheck>
+            </IconButton>
+           </Tooltip>
+          )}
+
+          <IconButton aria-label='delete'>
+           <GoReport></GoReport>
+          </IconButton>
+          <IconButton aria-label='delete'>
+           <FiAward></FiAward>
+          </IconButton>
+         </div>
+         <div>
+          <Dialog
+           open={open}
+           onClose={handleClose}
+           aria-labelledby='alert-dialog-title'
+           aria-describedby='alert-dialog-description'
+          >
+           <DialogTitle id='alert-dialog-title'>{'Add friend?'}</DialogTitle>
+           <DialogContent>
+            <DialogContentText id='alert-dialog-description'>
+             Do you want to add this user as a friend?
+            </DialogContentText>
+           </DialogContent>
+           <DialogActions>
+            <Button onClick={handleAddUser} color='primary' autoFocus>
+             Yes
+            </Button>
+            <Button onClick={handleClose} color='primary'>
+             No
+            </Button>
+           </DialogActions>
+          </Dialog>
          </div>
         </div>
        </div>

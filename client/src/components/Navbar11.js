@@ -10,6 +10,7 @@ import { useContext } from 'react';
 import { NavLink, useHistory, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { useHttp } from '../hooks/http.hook';
+import { IoMdNotificationsOutline } from 'react-icons/io';
 
 const Navbar = () => {
  const auth = useContext(AuthContext);
@@ -70,6 +71,18 @@ const Navbar = () => {
        <Link to='#'>
         <BiIcons.BiUser />
         <span>{auth.mainUserData.username}</span>
+       </Link>
+      </li>
+      <li
+       className='nav-text'
+       onClick={() => {
+        history.push('/notifications');
+       }}
+      >
+       {' '}
+       <Link to='#'>
+        <IoMdNotificationsOutline />
+        <span>{`Notifications (${auth.mainUserData.notifications.length})`}</span>
        </Link>
       </li>
       {SidebarData.map(

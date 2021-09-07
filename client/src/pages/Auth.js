@@ -24,6 +24,7 @@ import SelectedGame from './SelectedGame';
 import UserPage from './UserPage';
 import Users from './Users';
 import loadImage from '../images/loading1.gif';
+import Notifications from './Notifications';
 
 const Auth = () => {
  const alert = useAlert();
@@ -132,6 +133,7 @@ const Auth = () => {
           <Route path='/profile' exact component={Profile}></Route>
           <Route path='/reviewedGames' exact component={ReviewedGames}></Route>
           <Route path='/selectedGame' exact component={SelectedGame}></Route>
+          <Route path='/notifications' exact component={Notifications}></Route>
           <Route
            exact
            path='/randomUserReviewedGames'

@@ -42,11 +42,71 @@ router.post('/updateFavouriteGame', async (req, res) => {
    .json({ message: 'Something went wrong, please try again later!' });
  }
 });
+router.post('/addFriendRequest', async (req, res) => {
+ try {
+  const { notification, email } = req.body;
+  //   const user = await User.find({ username: userData.username });
+  console.log(notification, email);
+  const user1 = await User.updateOne(
+   { email: email },
+   {
+    $push: { notifications: notification },
+   }
+  );
+  res
+   .status(200)
+   .json({ message: 'Your friend request was successfully sended!' });
+ } catch (e) {
+  res
+   .status(500)
+   .json({ message: 'Something went wrong, please try again later!' });
+ }
+});
+router.post('/removeNotification', async (req, res) => {
+ try {
+  const { notification, email } = req.body;
+  //   const user = await User.find({ username: userData.username });
+  const user1 = await User.updateOne(
+   { email: email },
+   {
+    $pull: { notifications: { id: notification.id } },
+   }
+  );
+  res.status(200).json({ message: 'Notification removed!' });
+ } catch (e) {
+  res
+   .status(500)
+   .json({ message: 'Something went wrong, please try again later!' });
+ }
+});
+router.post('/addFriend', async (req, res) => {
+ try {
+  const { notification, email, notification2, email2 } = req.body;
+  //   const user = await User.find({ username: userData.username });
+  await User.updateOne(
+   { email: email },
+   {
+    $pull: { notifications: { id: notification.id } },
+    $push: { friends: notification.user },
+   }
+  );
+  await User.updateOne(
+   { email: email2 },
+   { $push: { notifications: notification2, friends: notification2.user } }
+  );
+  res
+   .status(200)
+   .json({ message: `You and ${notification.from} are now friends!` });
+ } catch (e) {
+  res
+   .status(500)
+   .json({ message: 'Something went wrong, please try again later!' });
+ }
+});
 router.post('/updateComments', async (req, res) => {
  try {
   const { comment, email } = req.body;
   //   const user = await User.find({ username: userData.username });
-  console.log(comment, email);
 
   const user1 = await User.updateOne(
    { email: email },

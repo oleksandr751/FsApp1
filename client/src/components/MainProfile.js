@@ -8,9 +8,6 @@ import { AiFillEdit } from 'react-icons/ai';
 import { useHistory } from 'react-router';
 import { makeStyles } from '@material-ui/core/styles';
 import Fade from '@material-ui/core/Fade';
-import { GamesData } from '../components/GamesData';
-import SearchIcon from '@material-ui/icons/Search';
-import CloseIcon from '@material-ui/icons/Close';
 import './MainProfile.css';
 import SearchBar from 'material-ui-search-bar';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -66,11 +63,6 @@ const MainProfile = (props) => {
   poster: '',
  };
  const { request } = useHttp();
- const location = useLocation();
- const locationData = location.state;
- const [showGameReviewForm, setShowGameReviewForm] = useState(false);
- const [url, setUrl] = useState('');
- const [file, setFile] = useState([]);
  const [rateGameInputs, setRateGameInputs] = useState(initialState);
  const [toggleEditProfile, settoggleEditProfile] = useState(false);
  const [filteredData, setFilteredData] = useState([]);
@@ -78,7 +70,6 @@ const MainProfile = (props) => {
  const [gameData, setGameData] = useState([]);
  const [showSearch, setShowSearch] = useState(false);
  const [showGame, setShowGame] = useState(false);
- const [checkFavourite, setCheckFavourite] = useState(false);
  const [avarageMark, setAvarageMark] = useState([]);
  const arrayOfMarks = [];
  const [gameReview, setGameReview] = useState(gameReviewInitialState);
@@ -164,10 +155,6 @@ const MainProfile = (props) => {
    game3.sum = Math.round(game3.sum * 100) / 100;
   });
   setAvarageMark(arrayOfMarks.map((game) => ({ ...game, title: game.title })));
-  console.log(arrayOfMarks);
- };
- const handleChange = (e) => {
-  setRateGameInputs({ ...rateGameInputs, [e.target.name]: e.target.value });
  };
  const handleGameReview = (e) => {
   setGameReview({
@@ -176,8 +163,6 @@ const MainProfile = (props) => {
    title: game.title,
    poster: game.poster,
   });
-
-  console.log(gameReview);
  };
  const handleEditUserData = (e) => {
   setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -190,27 +175,6 @@ const MainProfile = (props) => {
   // });
   calculateAvarageMark();
  };
- const handleFiles = (e) => {
-  setFile(Array.from(e.target.files));
- };
- //  const showFile = () => {
- //   setUrl(URL.createObjectURL(file[0]));
- //   console.log(file);
-
- //   setUserData({ ...auth.mainUserData, avatar: URL.createObjectURL(file[0]) });
- //  };
- const postAvarageMark = async () => {
-  try {
-   const response1 = await request('/api/games/postAvarageMark', 'POST', {
-    avarageMark,
-   });
-   console.log(response1);
-   console.log(avarageMark);
-  } catch (error) {
-   console.log(avarageMark);
-   console.log(error.message);
-  }
- };
  const calculateAvarageMarkUser = () => {
   let sum = 0;
   auth.mainUserData.games.map((game, idx) => {
@@ -218,7 +182,6 @@ const MainProfile = (props) => {
   });
   sum = sum / auth.mainUserData.games.length;
   setUserAvarageMark(sum);
-  console.log(sum);
  };
  const calculateMinMark = () => {
   let min = 10;
@@ -235,8 +198,6 @@ const MainProfile = (props) => {
   setMaxMark(max);
  };
  useEffect(() => {
-  console.log(auth.gamesData);
-
   const fetchData = async () => {
    await fetch('/api/games/getGames')
     .then((response) => response.json())
@@ -248,7 +209,6 @@ const MainProfile = (props) => {
   calculateAvarageMarkUser();
   calculateMinMark();
   calculateMaxMark();
-  // console.log(gameData);
  }, [auth.mainUserData, auth.gamesData]);
  console.log(auth.mainUserData);
 
@@ -390,7 +350,6 @@ const MainProfile = (props) => {
            color='primary'
            onClick={async () => {
             try {
-             console.log(userData);
              const response = await request('/api/users/updateAvatar', 'POST', {
               userData,
              });
@@ -473,7 +432,6 @@ const MainProfile = (props) => {
              color='primary'
              onClick={async () => {
               try {
-               console.log(email, game1);
                const response = await request(
                 '/api/users/updateFavouriteGame',
                 'POST',
@@ -723,7 +681,6 @@ const MainProfile = (props) => {
             variant='contained'
             color='primary'
             onClick={async () => {
-             console.log(gameReview);
              try {
               const response1 = await request(
                '/api/games/postAvarageMark',
@@ -732,14 +689,10 @@ const MainProfile = (props) => {
                 avarageMark,
                }
               );
-              // console.log(response1);
-              // console.log(avarageMark);
-
               const response = await request('/api/users/updateGames', 'POST', {
                gameReview,
               });
               alert.show(response, { type: 'success' });
-              console.log(response);
              } catch (error) {
               alert.show(error.message, { type: 'error' });
              }
@@ -775,7 +728,6 @@ const MainProfile = (props) => {
         variant='contained'
         color='primary'
         onClick={async () => {
-         console.log(comment);
          try {
           const response = await request('/api/users/updateComments', 'POST', {
            comment,
@@ -783,7 +735,6 @@ const MainProfile = (props) => {
           });
           alert.show(response.message, { type: 'success' });
           window.location.reload();
-          console.log(response);
          } catch (error) {
           alert.show(error.message, { type: 'error' });
          }
@@ -795,7 +746,12 @@ const MainProfile = (props) => {
         <div className='commentsParent'>
          {auth.mainUserData.comments.map((comment, idx) => (
           <div className='commentsMainProfile' key={idx}>
-           <img src={comment.avatar} width={50} height={50}></img>
+           <img
+            alt={comment.username}
+            src={comment.avatar}
+            width={50}
+            height={50}
+           ></img>
            <div className='commentsMainProfileText'>
             <h3>{comment.username}</h3>
             <legend>{comment.text}</legend>

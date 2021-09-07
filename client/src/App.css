@@ -82,3 +82,22 @@ div.postsContainer {
 .starRate svg {
  font-size: 25px;
 }
+.notifications {
+ margin-top: 150px;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+}
+.friendRequestDiv {
+ display: flex;
+ flex-direction: row;
+ justify-content: center;
+ align-items: center;
+}
+.notification {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+}

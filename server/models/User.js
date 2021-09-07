@@ -12,6 +12,7 @@ const schema = new Schema({
  description: { type: String },
  favouriteGame: { type: Object },
  posts: [{ type: Object }],
+ notifications: [{ type: Object }],
 });
 
 module.exports = model('User', schema);
