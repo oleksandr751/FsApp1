@@ -14,7 +14,6 @@ import IconButton from '@material-ui/core/IconButton';
 import { Button, TextField } from '@material-ui/core';
 // import JSONBullshit from '../data.json';
 // import { element } from 'prop-types';
-import './Game.css';
 import SearchBar from 'material-ui-search-bar';
 import { useHttp } from '../hooks/http.hook';
 import Tooltip from '@material-ui/core/Tooltip';

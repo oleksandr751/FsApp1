@@ -8,7 +8,6 @@ import { AiFillEdit } from 'react-icons/ai';
 import { useHistory } from 'react-router';
 import { makeStyles } from '@material-ui/core/styles';
 import Fade from '@material-ui/core/Fade';
-import './MainProfile.css';
 import SearchBar from 'material-ui-search-bar';
 import Checkbox from '@material-ui/core/Checkbox';
 import { AuthContext } from '../context/AuthContext';
@@ -26,6 +25,7 @@ import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
+import { GiCancel } from 'react-icons/gi';
 
 const MainProfile = (props) => {
  const useStyles = makeStyles((theme) => ({
@@ -80,7 +80,13 @@ const MainProfile = (props) => {
  const [wordEntered1, setWordEntered1] = useState('');
  const [filteredData1, setFilteredData1] = useState([]);
  const [email, setEmail] = useState(auth.eMail);
- const [comment, setComment] = useState({ username: '', text: '', avatar: '' });
+ const [comment, setComment] = useState({
+  username: '',
+  text: '',
+  avatar: '',
+  email: auth.mainUserData.email,
+  id: Math.floor(Math.random() * 10000),
+ });
  const [userAvarageMark, setUserAvarageMark] = useState(0);
  const [minMark, setMinMark] = useState(0);
  const [maxMark, setMaxMark] = useState(0);
@@ -126,6 +132,13 @@ const MainProfile = (props) => {
   setComment({
    ...comment,
    [e.target.name]: e.target.value,
+   username: auth.mainUserData.username,
+   avatar: auth.mainUserData.avatar,
+   day: new Date().getUTCDate(),
+   month: new Date().getUTCMonth() + 1,
+   year: new Date().getUTCFullYear(),
+   hours: new Date().getHours(),
+   minutes: new Date().getMinutes(),
   });
  };
  const tooltips = {
@@ -283,9 +296,22 @@ const MainProfile = (props) => {
           </a>
           <a
            className='redirectToReviewedGames'
-           //  onClick={() => {
-           //   history.push('/reviewedGames');
-           //  }}
+           onClick={async () => {
+            console.log(new Date().getHours(), new Date().getMinutes());
+            // try {
+            //  const response = await request(
+            //   '/api/users/updateAllUserComments',
+            //   'POST',
+            //   {
+            //    userData,
+            //   }
+            //  );
+            //  alert.show(response.message, { type: 'success' });
+            //  window.location.reload();
+            // } catch (error) {
+            //  alert.show(error.message, { type: 'error' });
+            // }
+           }}
           >
            <p>Posts {auth.mainUserData.posts?.length}</p>
           </a>
@@ -720,6 +746,11 @@ const MainProfile = (props) => {
           ...comment,
           username: auth.mainUserData.username,
           avatar: auth.mainUserData.avatar,
+          day: new Date().getUTCDay(),
+          month: new Date().getUTCMonth(),
+          year: new Date().getUTCFullYear(),
+          hours: new Date().getHours(),
+          minutes: new Date().getMinutes(),
          });
         }}
         inputProps={{ maxLength: 400 }}
@@ -754,7 +785,31 @@ const MainProfile = (props) => {
            ></img>
            <div className='commentsMainProfileText'>
             <h3>{comment.username}</h3>
+            <span>{`0${comment.day}.0${comment.month}.${comment.year}`}</span>
+            <h4>{`${comment.hours}:${comment.minutes}`}</h4>
             <legend>{comment.text}</legend>
+           </div>
+           <div>
+            <IconButton
+             aria-label='delete'
+             onClick={async () => {
+              try {
+               const response = await request(
+                '/api/users/deleteComment',
+                'POST',
+                {
+                 comment,
+                 email,
+                }
+               );
+               alert.show(response.message, { type: 'success' });
+              } catch (error) {
+               alert.show(error.message, { type: 'error' });
+              }
+             }}
+            >
+             <GiCancel></GiCancel>
+            </IconButton>
            </div>
           </div>
          ))}

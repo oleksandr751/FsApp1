@@ -19,7 +19,6 @@ import {
 } from 'react-icons/ai';
 import { FiTwitter } from 'react-icons/fi';
 import { useAlert } from 'react-alert';
-import './AuthPage.css';
 import { FaTelegram } from 'react-icons/fa';
 
 export const AuthPage = () => {
@@ -209,9 +208,7 @@ export const AuthPage = () => {
          value={form.email1}
         ></TextField>
        </div>
-       <div>
-        <a>Forgot password?</a>
-       </div>
+
        <div className='signInInput'>
         {' '}
         <AiFillLock />
@@ -228,6 +225,9 @@ export const AuthPage = () => {
        </div>
        <div>
         <a>Create account</a>
+       </div>
+       <div>
+        <a>Forgot password?</a>
        </div>
        <Button
         id='button1'

@@ -6,7 +6,9 @@
  padding: 0;
  font-family: 'Lato', sans-serif;
 }
-
+#root {
+ height: 100%;
+}
 body {
  height: 100%;
  width: 100%;
@@ -40,7 +42,6 @@ div.postsContainer {
  padding: 20px;
 }
 #root {
- height: 100%;
  width: 100%;
 }
 .mainDiv {

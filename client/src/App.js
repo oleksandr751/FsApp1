@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import 'materialize-css';
 import { useRoutes } from './routes';
 import { useAuth } from './hooks/auth.hook';

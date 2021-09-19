@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import Rating from '@material-ui/lab/Rating';
 import { AuthContext } from '../context/AuthContext';
-import './ReviewedGames.css';
 
 const ReviewedGames = () => {
  const auth = useContext(AuthContext);

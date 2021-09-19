@@ -172,6 +172,7 @@ legend {
 }
 .swiper-container h3 {
  font-size: 24px;
+ padding-top: 40px;
 }
 .swiper-container {
  display: flex;

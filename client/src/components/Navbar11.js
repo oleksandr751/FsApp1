@@ -4,7 +4,6 @@ import * as AiIcons from 'react-icons/ai';
 import * as BiIcons from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
-import './Navbar.css';
 import { IconContext } from 'react-icons';
 import { useContext } from 'react';
 import { NavLink, useHistory, useLocation } from 'react-router-dom';

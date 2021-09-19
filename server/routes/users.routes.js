@@ -24,6 +24,27 @@ router.post('/updateAvatar', async (req, res) => {
   res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова' });
  }
 });
+router.post(
+ '/updateAllUserComments',
+ async (req, res) => {
+  try {
+   const { userData } = req.body;
+   console.log(userData);
+   const users = await User.updateMany(
+    {
+     comments: { username: userData.username },
+    },
+    { $push: { comments: { email: userData.email } } }
+   );
+   res.status(200).json({ message: 'Data edited successfully!', data: user1 });
+  } catch (error) {
+   res
+    .status(500)
+    .json({ message: 'Something went wrong, please try again later!' });
+  }
+ },
+ []
+);
 router.post('/updateFavouriteGame', async (req, res) => {
  try {
   const { game1, email } = req.body;
@@ -73,6 +94,23 @@ router.post('/removeNotification', async (req, res) => {
    }
   );
   res.status(200).json({ message: 'Notification removed!' });
+ } catch (e) {
+  res
+   .status(500)
+   .json({ message: 'Something went wrong, please try again later!' });
+ }
+});
+router.post('/deleteComment', async (req, res) => {
+ try {
+  const { comment, email } = req.body;
+  //   const user = await User.find({ username: userData.username });
+  const user1 = await User.updateOne(
+   { email: email },
+   {
+    $pull: { comments: { id: comment.id } },
+   }
+  );
+  res.status(200).json({ message: 'Comment removed!' });
  } catch (e) {
   res
    .status(500)

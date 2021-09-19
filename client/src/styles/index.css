@@ -1,3 +1,14 @@
+@import url('./App.css');
+@import url('./AuthPage.css');
+@import url('./Footer.css');
+@import url('./Games.css');
+@import url('./Home.css');
+@import url('./MainProfile.css');
+@import url('./Navbar.css');
+@import url('./Posts.css');
+@import url('./ReviewedGames.css');
+@import url('./SelectedGame.css');
+
 body {
  margin: 0;
  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

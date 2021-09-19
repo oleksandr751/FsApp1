@@ -1,7 +1,6 @@
 import Rating from '@material-ui/lab/Rating';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import './SelectedGame.css';
 
 const SelectedGame = () => {
  const auth = useContext(AuthContext);

@@ -23,8 +23,11 @@ import Reports from './Reports';
 import SelectedGame from './SelectedGame';
 import UserPage from './UserPage';
 import Users from './Users';
-import loadImage from '../images/loading1.gif';
+
 import Notifications from './Notifications';
+import Friends from './Friends';
+import Footer from '../components/Footer';
+import Loading from '../components/Loading';
 
 const Auth = () => {
  const alert = useAlert();
@@ -113,11 +116,7 @@ const Auth = () => {
      {isAuthenticated ? (
       <>
        {loading ? (
-        <div>
-         <div className='loadingGif'>
-          <img alt='loading....' src={loadImage}></img>
-         </div>
-        </div>
+        <Loading />
        ) : (
         <Router>
          <Navbar />
@@ -134,12 +133,14 @@ const Auth = () => {
           <Route path='/reviewedGames' exact component={ReviewedGames}></Route>
           <Route path='/selectedGame' exact component={SelectedGame}></Route>
           <Route path='/notifications' exact component={Notifications}></Route>
+          <Route path='/randomUserFriends' exact component={Friends}></Route>
           <Route
            exact
            path='/randomUserReviewedGames'
            component={RandomUserReviewedGames}
           ></Route>
          </Switch>
+         <Footer />
         </Router>
        )}
       </>
